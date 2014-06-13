@@ -1,0 +1,19 @@
+{
+  "name": "gulp-project",
+  "version": "0.1.0",
+  "authors": [
+    "Daniel Schmidt <tehbuilder@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "gsap": "~1.11.8",
+    "normalize.css": "~3.0.1"
+  }
+}
