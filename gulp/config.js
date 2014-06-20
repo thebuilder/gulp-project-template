@@ -13,7 +13,6 @@ module.exports = {
 
     //Paths
     src: 'src',
-    templates: 'templates',
     dist: 'build',
 
     //Content dirs
@@ -25,6 +24,7 @@ module.exports = {
     mainLess: 'app.less',
     mainJs: 'app.js',
     jadeFiles: 'views/pages/*.jade',
+    jadeLocals: 'views/data/',
 
     //Runtime vars. These are used by tasks.
     isReleaseBuild: false

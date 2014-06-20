@@ -17,3 +17,4 @@ gulp.task('default', ['build', 'watch', 'serve', 'open']);
 
 //All build tasks
 gulp.task('build', ['browserify', 'jade', 'less', 'bower', 'images', 'assets']);
+
