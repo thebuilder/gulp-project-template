@@ -10,6 +10,8 @@
 */
 
 var gulp = require('gulp');
+
+//Require the project gulp directory
 require('./gulp');
 
 //Build and start watching for changes
@@ -18,3 +20,14 @@ gulp.task('default', ['build', 'watch', 'serve', 'open']);
 //All build tasks
 gulp.task('build', ['browserify', 'jade', 'less', 'bower', 'images', 'assets']);
 
+//Create a release build
+gulp.task('release', function() {
+    var config = require("./gulp/config");
+    config.isReleaseBuild = true;
+
+    //Run build task
+    gulp.start('build');
+});
+
+//Create a release build, zip and upload it
+gulp.task('deploy', ['release', 'zip', 'ftp']);

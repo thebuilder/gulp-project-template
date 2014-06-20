@@ -14,9 +14,12 @@ gulp.task('browserify', function(){
 		.bundle({debug: !config.isReleaseBuild})
 		.on('error', handleErrors)
 
-        .pipe(plumber({errorHandler:handleErrors}))
+        .pipe(plumber())
 		.pipe(source(config.mainJs))
+
         //Uglify if release build
-        .pipe(gulpif(config.isReleaseBuild, streamify(uglify())))//Wrap uglify in streamify, so it supports the stream
+        .pipe(gulpif(config.isReleaseBuild, streamify(uglify()))) //Wrap uglify in streamify, so it supports the stream
+
+        //Write to dest
         .pipe(gulp.dest(config.dist + '/js/'));
 });
