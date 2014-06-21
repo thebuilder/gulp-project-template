@@ -2,8 +2,8 @@ var path = require('path');
 
 module.exports = {
     server: {
-        root: path.resolve('./build'),
-        port: '8080',
+        root: path.resolve('./dist'),
+        port: '8081',
         log: true,
 
         //Auto open browser on gulp run?
@@ -13,7 +13,7 @@ module.exports = {
 
     //Paths
     src: 'src',
-    dist: 'build',
+    dist: 'dist',
 
     //Content dirs
     jsDir: 'js',
@@ -27,5 +27,6 @@ module.exports = {
     jadeLocals: 'views/data/',
 
     //Runtime vars. These are used by tasks.
-    isReleaseBuild: false
+    isReleaseBuild: false,
+    jadeLocalsChanged: false
 };

@@ -1,6 +1,7 @@
 .DS_Store
 .sass-cache
 .idea
+.ftp.json
 
-build
+dist
 node_modules
