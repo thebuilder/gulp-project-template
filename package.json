@@ -8,15 +8,14 @@
     ]
   },
   "browserify-shim": {
-    "plugin": {
-      "exports": "plugin",
-      "depends": [
-        "jquery:$"
-      ]
-    }
+   "tweenlite": "global:TweenLite",
+   "tweenmax": "global:TweenMax",
+   "timelinemax": "global:TimelineMax",
+   "jquery": "$"
   },
   "devDependencies": {
     "browserify": "~3.36.1",
+    "browserify-shim": "~3.5.0",
     "bower-files": "~1.2.0",
     "connect": "~2.14.5",
     "minimist": "~0.1.0",
@@ -41,8 +40,7 @@
     "gulp-minify-css": "~0.3.4",
     "gulp-open": "~0.2.8",
     "gulp-ftp": "~0.3.0",
-    "gulp-zip": "~0.3.4",
-    "browserify-shim": "~3.5.0"
+    "gulp-zip": "~0.3.4"
   },
   "dependencies": {}
 }
