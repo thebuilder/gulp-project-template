@@ -3,7 +3,7 @@ var path = require('path');
 module.exports = {
     server: {
         root: path.resolve('./dist'),
-        port: '8081',
+        port: '8080',
         log: true,
 
         //Auto open browser on gulp run?

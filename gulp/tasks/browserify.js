@@ -1,25 +1,35 @@
 var gulp         = require('gulp');
-var gulpif       = require('gulp-if');
-var uglify       = require('gulp-uglify');
 var browserify   = require('browserify');
-var streamify    = require('gulp-streamify')
+var minifyify    = require('minifyify');
+var path         = require('path');
 var plumber      = require('gulp-plumber');
 var source       = require('vinyl-source-stream');
 var handleErrors = require('../util/handleErrors');
 var config       = require('../config');
 
 gulp.task('browserify', function(){
-	return browserify("./" + config.src + '/' + config.jsDir + '/' + config.mainJs)
-		.on('error', handleErrors)
-		.bundle({debug: !config.isReleaseBuild})
-		.on('error', handleErrors)
+    /**
+     * @type {Browserify}
+     */
+    var b = browserify();
+    //Add the main js file
+    b.add("./" + config.src + '/' + config.jsDir + '/' + config.mainJs);
 
+    if (config.isReleaseBuild) {
+        //Minify and create source maps bundle if creating release build
+        b.plugin('minifyify', {
+            map: 'bundle.map.json',
+            output:config.dist + '/' + config.jsDir + '/bundle.map.json',
+            compressPath: function (p) {
+                //Relative path to the src files. Remove to use absolute paths
+                return path.relative(config.dist, p);
+            }
+        });
+    }
+
+    b.bundle({debug: !config.isReleaseBuild})
+        .on('error', handleErrors)
         .pipe(plumber())
-		.pipe(source(config.mainJs))
-
-        //Uglify if release build
-        .pipe(gulpif(config.isReleaseBuild, streamify(uglify()))) //Wrap uglify in streamify, so it supports the stream
-
-        //Write to dest
-        .pipe(gulp.dest(config.dist + '/js/'));
+        .pipe(source(config.mainJs))
+        .pipe(gulp.dest(config.dist + '/'+ config.jsDir + '/'));
 });

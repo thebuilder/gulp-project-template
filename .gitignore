@@ -1,7 +1,10 @@
+node_modules
+bower_components
+
 .DS_Store
 .sass-cache
 .idea
 .ftp.json
 
+//Build directory
 dist
-node_modules
