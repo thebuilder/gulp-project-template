@@ -109,13 +109,16 @@ Copy and minify images.
 Compile the main jade file.
 
 ####less
-Compile the main less file.
+Compile the main less file, and attach source maps. In release mode the css file will also be minified.
+
+####lint
+Run the .js files through JSHint, using the settings in **.jshintrc**. Change these to suit the project.
 
 ####open
 Opens the browser and navigate to the local server.
 
 ####serve
-Create a local server.
+Create a local server. Default path is [http://localhost:8080]([http://localhost:8080]), but this can be configured in the **config.js** file
 
 ####watch
 Watch for changes, and run respective tasks.
