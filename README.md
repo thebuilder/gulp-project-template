@@ -1,5 +1,6 @@
 gulp-project-template
 =====================
+A template combining Gulp, Browserify and Jade, for a sweet starting point for new projects.
 
 ##Getting started
 The following tools are required when developing the project locally:
@@ -33,10 +34,22 @@ To start developing run **gulp**. This will compile files, and watch for changes
     gulp
     
 
-##Gulp Tasks
-The following are the default tasks included in the template.
+##Gulp
+The main **gulpfile.js** is kept very small, and only contains the very minimum require code and the alias tasks.
+Everything else related to gulp is placed inside the **gulp/** directory.
 
-###Task groups
+* **tasks**
+    * All the gulp tasks are placed in here.
+* **util**
+    * Utility methods.
+* **.ftp.json**
+    * FTP Servers used in the project. See [FTP task](#ftp) for details.
+* **config.js**
+    * Contains path variables and other configuration vars, that are shared by tasks. You can change these to suit your project.
+* **index.js**
+    * The file responsible for requiring all the tasks. You should not need to edit this.
+
+###Alias Tasks
 The following tasks are placed in **gulpfile.js**, and executes a group of tasks to compile the project.
 
 ####default
@@ -64,7 +77,7 @@ Concat bower components into .js and .css files.
 ####browserify
 Compile JS using [browserify](http://browserify.org/).
 
-####ftp
+####[ftp](id:ftp)
 Upload the build directory to an ftp server.
 You will need to manually create and fill out the blanks in **gulp/.ftp.json**.
 
