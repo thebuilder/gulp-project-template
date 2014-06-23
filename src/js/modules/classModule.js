@@ -10,7 +10,7 @@ function ClassModule(config) {
      * Say hello!
      */
     function greeting() {
-        console.log("Hello world");
+        console.log("Hello world", config);
     }
 
     /**
@@ -18,7 +18,7 @@ function ClassModule(config) {
      */
     return {
         greeting:greeting
-    }
+    };
 }
 
 //Export the Constructor
