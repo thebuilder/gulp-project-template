@@ -7,7 +7,10 @@ var source       = require('vinyl-source-stream');
 var handleErrors = require('../util/handleErrors');
 var config       = require('../config');
 
-gulp.task('browserify', function(){
+/**
+ * Browserify should always depend on lint, to ensure JS is looking good.
+ */
+gulp.task('browserify', ['lint'], function(){
     /**
      * @type {Browserify}
      */
@@ -27,7 +30,7 @@ gulp.task('browserify', function(){
         });
     }
 
-    b.bundle({debug: !config.isReleaseBuild})
+    return b.bundle({debug: !config.isReleaseBuild})
         .on('error', handleErrors)
         .pipe(plumber())
         .pipe(source(config.mainJs))

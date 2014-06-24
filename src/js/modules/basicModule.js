@@ -5,12 +5,10 @@
  */
 module.exports = {
     /**
-     * @param {Object} config Configuration object to pass the method
      * @returns {String}
      */
-    init: function(config) {
-        var value = privateMethod();
-        return value;
+    init: function() {
+        return privateMethod();
     },
     dispose: function() {
     },
@@ -23,7 +21,6 @@ module.exports = {
  */
 exports.exportsMethod = function() {
 };
-
 
 /**
  * Methods outside the exports will still be placed in the module, but be private.
