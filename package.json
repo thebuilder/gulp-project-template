@@ -4,7 +4,9 @@
   "description": "",
   "browserify": {
     "transform": [
-      "browserify-shim"
+      "browserify-shim",
+      "browserify-plain-jade",
+      "partialify"
     ]
   },
   "browserify-shim": {
@@ -41,7 +43,9 @@
     "gulp-ftp": "~0.3.0",
     "gulp-zip": "~0.3.4",
     "gulp-jshint": "~1.6.3",
-    "jshint-stylish": "~0.2.0"
+    "jshint-stylish": "~0.2.0",
+    "partialify": "~3.1.1",
+    "browserify-plain-jade": "~0.2.0"
   },
   "dependencies": {}
 }
