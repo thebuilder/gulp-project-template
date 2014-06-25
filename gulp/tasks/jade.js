@@ -13,7 +13,9 @@ gulp.task('jade', function() {
 
     return gulp.src(config.src + config.viewsDir + config.jadeFiles)
         .pipe(plumber())
-        .pipe(gulpif(config.onlyCompiledChangedPages, changed(config.dist, { extension: '.html' }))) // Ignore unchanged files
+        .pipe(gulpif(config.onlyCompiledChangedPages,
+            changed(config.dist, { extension: '.html' }) // Ignore unchanged files
+        ))
         .pipe(jade({pretty: true, locals:locals}))
         .pipe(gulp.dest(config.dist));
 });
