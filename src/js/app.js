@@ -8,3 +8,5 @@ basicModule.init();
 
 var instance = new ClassModule();
 instance.greeting();
+
+console.log(require("../views/data/data.json"));

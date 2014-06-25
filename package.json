@@ -5,6 +5,8 @@
   "browserify": {
     "transform": [
       "browserify-shim",
+      "browserify-plain-jade",
+      "partialify",
       "browserify-ngmin"
     ]
   },
@@ -19,6 +21,8 @@
     "browserify": "~4.1.11",
     "browserify-shim": "~3.6.0",
     "browserify-ngmin": "~0.1.0",
+    "partialify": "~3.1.1",
+    "browserify-plain-jade": "~0.2.0",
     "minifyify": "~3.0.9",
     "bower-files": "~1.2.0",
     "connect": "~2.14.5",
@@ -28,6 +32,8 @@
     "gulp": "~3.6.2",
     "gulp-changed": "~0.3.0",
     "gulp-less": "~1.1.8",
+    "gulp-autoprefixer": "0.0.7",
+    "gulp-recess": "~0.3.1",
     "gulp-imagemin": "~0.6.1",
     "gulp-livereload": "~1.2.0",
     "gulp-notify": "~1.2.4",

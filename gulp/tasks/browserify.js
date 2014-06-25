@@ -17,7 +17,6 @@ gulp.task('browserify', ['lint'], function(){
     var b = browserify();
     //Add the main js file
     b.add("./" + config.src + '/' + config.jsDir + '/' + config.mainJs);
-
     if (config.isReleaseBuild) {
         //Minify and create source maps bundle if creating release build
         b.plugin('minifyify', {

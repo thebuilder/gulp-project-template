@@ -109,7 +109,7 @@ Copy and minify images.
 Compile the main jade file.
 
 ####less
-Compile the main less file, and attach source maps. In release mode the css file will also be minified.
+Compile the main less file, and attach source maps. The .less files are run through [RECESS](http://twitter.github.io/recess/) to ensure some sanity, and autoprefixes to add vendor tags. In release mode the css file will also be minified.
 
 ####lint
 Run the .js files through JSHint, using the settings in **.jshintrc**. Change these to suit the project.
