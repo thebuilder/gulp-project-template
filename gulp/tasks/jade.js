@@ -9,13 +9,11 @@ var config       = require('../config');
 
 gulp.task('jade', function() {
     //Read .json data from the jadeLocals directory, and make it accessible to Jade.
-    var locals = config.jadeLocals ? readJson(config.src + '/' + config.jadeLocals) : {};
-    var checkForChanges = config.jadeLocalsChanged;
-    config.jadeLocalsChanged = false;
+    var locals = config.jadeLocals ? readJson(config.src + config.viewsDir + config.jadeLocals) : {};
 
-    return gulp.src(config.src + '/' + config.jadeFiles)
+    return gulp.src(config.src + config.viewsDir + config.jadeFiles)
         .pipe(plumber())
-        .pipe(gulpif(!checkForChanges, changed(config.dist, { extension: '.html' }))) // Ignore unchanged files
+        .pipe(gulpif(config.onlyCompiledChangedPages, changed(config.dist, { extension: '.html' }))) // Ignore unchanged files
         .pipe(jade({pretty: true, locals:locals}))
         .pipe(gulp.dest(config.dist));
 });

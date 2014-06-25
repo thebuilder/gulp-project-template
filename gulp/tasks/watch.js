@@ -5,29 +5,24 @@ var watch       = require('gulp-watch');
 var config = require('../config');
 
 gulp.task('watch', function () {
-	watch({glob:config.src + '/' + config.jsDir + '/**', name:"JS", emitOnGlob:false}, ['browserify']);
-	watch({glob:config.src + '/'+ config.lessDir + '/**', name:"LESS", emitOnGlob:false}, ['less']);
-	watch({glob:config.src + '/'+ config.imgDir + '/**', name:"Images", emitOnGlob:false}, ['images']);
+	watch({glob:config.src + config.jsDir + '**', name:"JS", emitOnGlob:false}, ['browserify']);
+	watch({glob:config.src + config.lessDir + '**', name:"LESS", emitOnGlob:false}, ['less']);
+	watch({glob:config.src + config.imgDir + '**', name:"Images", emitOnGlob:false}, ['images']);
 	watch({glob:'bower_components/**/{*.js,*.css}', name:"Bower", emitOnGlob:false}, ['bower']);
 
     //Uncomment to watch for changes to sprites
 	//watch({glob:config.src + '/sprites/svgs/**/*.svg', name:"Sprites", emitOnGlob:false}, ['sprites']);
 
 	//JADE
-    watch({glob:[config.src + '/views/**', "!" + config.src + '/' + config.jadeLocals + "*.json"], name:"JADE", emitOnGlob:false}, ['jade']);
-    watch({glob:config.src + '/' + config.jadeLocals + "*.json", name:"JADE Locals", emitOnGlob:false}, function() {
-        //If the jade .json files have changed, all jade pages should be recompiled.
-        config.jadeLocalsChanged = true;
-        gulp.start("jade");
-    });
+    watch({glob:[config.src + 'views/**'], name:"JADE", emitOnGlob:false}, ['jade']);
 
     //OTHER ASSETS
 	watch({glob:[
-        config.src + '/fonts/**',
-        config.src + '/thirdparty/**'
+        config.src + 'fonts/**',
+        config.src + 'thirdparty/**'
     ], name:"Assets", emitOnGlob:false}, ['assets']);
 
     //Watch the build directories for changes, and execute LiveReload.
-	watch({glob:[config.dist + '/**'], name:"LiveReload", emitOnGlob:false})
+	watch({glob:[config.dist + '**'], name:"LiveReload", emitOnGlob:false})
         .pipe(livereload()); //Execute a LiveReload on changed files in build directory
 });

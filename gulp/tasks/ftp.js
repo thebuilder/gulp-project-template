@@ -55,7 +55,7 @@ gulp.task('ftp', ["build"], function () {
 
     if (options) {
         gutil.log("Deploying to", gutil.colors.yellow(options.host));
-        return gulp.src(config.dist + "/**/*.*")
+        return gulp.src(config.dist + "**/*.*")
             .pipe(plumber())
             .pipe(ftp(options));
     } else {

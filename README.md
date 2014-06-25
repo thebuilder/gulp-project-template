@@ -103,7 +103,7 @@ To push to a specific server you should run the ftp task with a target, like:
 If no target is specified, or if there is only one target in the file, it will be used.
 
 ####images
-Copy and minify images.
+Copy and minify images. Supports .png, .jpg, .gif and .svg.
 
 ####jade
 Compile the main jade file.
@@ -130,6 +130,9 @@ Make a .zip file containing the build content. It will be placed in the **releas
 
 ##Spritesheets
 **gulp-svg-sprites** is used create a sprite sheet from .svg files, outputting both an .svg and .png spritesheet.
+To create a sprite sheet call the gulp task:
+
+    gulp sprites
 
 ###Including CSS
 A CSS file is generated with classes for all the sprites. You should include this in the app.less file:

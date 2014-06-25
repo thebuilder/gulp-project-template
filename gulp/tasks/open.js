@@ -10,5 +10,5 @@ gulp.task('open', ['build'], function() {
 		app: config.server.browser
 	};
 
-	return gulp.src(config.server.root + "/index.html").pipe(open("", options));
+	return gulp.src(config.server.root + "index.html").pipe(open("", options));
 });

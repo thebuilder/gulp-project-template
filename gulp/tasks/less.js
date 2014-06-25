@@ -1,6 +1,6 @@
 var gulp         = require('gulp');
 var less         = require('gulp-less');
-var recess         = require('gulp-recess');
+var recess       = require('gulp-recess');
 var autoprefixer = require('gulp-autoprefixer');
 var gulpif       = require('gulp-if');
 var plumber      = require('gulp-plumber');
@@ -10,7 +10,7 @@ var config       = require('../config');
 var handleErrors = require('../util/handleErrors');
 
 gulp.task('less', function () {
-    return gulp.src(config.src + '/' + config.lessDir +'/' + config.mainLess)
+    return gulp.src(config.src + config.lessDir + config.mainLess)
         .pipe(plumber({errorHandler:handleErrors}))
         //Lint the LESS file with recess before compiling it
         .pipe(recess({
@@ -32,5 +32,5 @@ gulp.task('less', function () {
             to: "app.css"
         }))
         .pipe(gulpif(config.isReleaseBuild, minifyCSS({keepBreaks:true})))
-        .pipe(gulp.dest(config.dist + '/css'))
+        .pipe(gulp.dest(config.dist + 'css'))
 });

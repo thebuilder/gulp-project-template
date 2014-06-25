@@ -6,24 +6,21 @@
     "transform": [
       "browserify-shim",
       "browserify-plain-jade",
-      "partialify",
-      "browserify-ngmin"
+      "partialify"
     ]
   },
   "browserify-shim": {
     "tweenlite": "global:TweenLite",
     "tweenmax": "global:TweenMax",
     "timelinemax": "global:TimelineMax",
-    "jquery": "$",
-    "angular": "angular"
+    "angular": "global:angular"
   },
   "devDependencies": {
     "browserify": "~4.1.11",
     "browserify-shim": "~3.6.0",
-    "browserify-ngmin": "~0.1.0",
     "partialify": "~3.1.1",
     "browserify-plain-jade": "~0.2.0",
-    "minifyify": "~3.0.9",
+    "uglifyify": "~2.4.0",
     "bower-files": "~1.2.0",
     "connect": "~2.14.5",
     "minimist": "~0.1.0",
@@ -52,7 +49,6 @@
     "gulp-zip": "~0.3.4",
     "gulp-jshint": "~1.6.3",
     "jshint-stylish": "~0.2.0",
-    "gulp.spritesmith": "~1.1.1",
     "gulp-svg-sprites": "~0.1.2"
   },
   "dependencies": {}

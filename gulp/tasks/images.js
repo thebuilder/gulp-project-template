@@ -8,9 +8,9 @@ var config     = require('../config');
  * Minify images and copy to dist directory.
  */
 gulp.task('images', function() {
-	var dest = config.dist + '/' + config.imgDir;
+	var dest = config.dist + config.imgDir;
 
-	return gulp.src(config.src + '/' + config.imgDir + '/**/{*.png,*.jpg,*.gif,*.svg}')
+	return gulp.src(config.src + config.imgDir + '**/{*.png,*.jpg,*.gif,*.svg}')
         .pipe(plumber())
 		.pipe(changed(dest)) // Ignore unchanged files
 		.pipe(imagemin()) // Optimize

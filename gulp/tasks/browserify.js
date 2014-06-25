@@ -1,7 +1,5 @@
 var gulp         = require('gulp');
 var browserify   = require('browserify');
-var minifyify    = require('minifyify');
-var path         = require('path');
 var plumber      = require('gulp-plumber');
 var source       = require('vinyl-source-stream');
 var handleErrors = require('../util/handleErrors');
@@ -16,22 +14,22 @@ gulp.task('browserify', ['lint'], function(){
      */
     var b = browserify();
     //Add the main js file
-    b.add("./" + config.src + '/' + config.jsDir + '/' + config.mainJs);
+    b.add("./" + config.src + config.jsDir + config.mainJs);
+
     if (config.isReleaseBuild) {
-        //Minify and create source maps bundle if creating release build
-        b.plugin('minifyify', {
-            map: 'bundle.map.json',
-            output:config.dist + '/' + config.jsDir + '/bundle.map.json',
-            compressPath: function (p) {
-                //Relative path to the src files. Remove to use absolute paths
-                return path.relative(config.dist, p);
-            }
-        });
+        //Uglify when compiling for release
+        b.transform({
+            global: true,
+            mangle: false,
+            exts: [".js"], //Only uglify .js files. Would break if .html or .json are required.
+            ignore: []
+        }, 'uglifyify');
     }
 
+    //After transforms have been applied, bundle it all up and export
     return b.bundle({debug: !config.isReleaseBuild})
         .on('error', handleErrors)
         .pipe(plumber())
         .pipe(source(config.mainJs))
-        .pipe(gulp.dest(config.dist + '/'+ config.jsDir + '/'));
+        .pipe(gulp.dest(config.dist + config.jsDir));
 });

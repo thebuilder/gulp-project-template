@@ -13,46 +13,45 @@ var config      = require('../config');
 gulp.task('bower', function () {
     var streams = [];
 
-    var path;
-    for (var group in files) {
-        var groupFiles = files[group];
-        gutil.log("Package " + group.toUpperCase());
-
+    function logFiles(groupFiles) {
+        var path;
         //Log out all the files being found in bower
         for (var i = 0; i < groupFiles.length; i++) {
             path = groupFiles[i];
             path = path.substring(path.indexOf("bower_components/"));
             gutil.log("Adding: " + gutil.colors.green(path));
         }
+    }
+    if (files["js"]) {
+        //Concat all the Bower JS libs
+        gutil.log("Package JS");
+        logFiles(files["js"]);
+        streams.push(
+            gulp.src(files["js"])
+                .pipe(plumber())
+                .pipe(concat('vendor.min.js'))
+                .pipe(uglify({mangle: false}))
+                .pipe(rename(function (path) {
+                    path.dirname = "js";
+                    gutil.log("Output: " + gutil.colors.yellow(path.dirname + "/" + path.basename + path.extname));
+                }))
+        );
+    }
 
-        switch (group) {
-            case "js":
-                //Concat all the Bower JS libs
-                streams.push(
-                    gulp.src(files.js)
-                        .pipe(plumber())
-                        .pipe(concat('vendor.min.js'))
-                        .pipe(uglify())
-                        .pipe(rename(function(path) {
-                            path.dirname = "js";
-                            gutil.log("Output: " + gutil.colors.yellow(path.dirname + "/" + path.basename + path.extname));
-                        }))
-                );
-                break;
-            case "css":
-                //Concat all the Bower CSS libs
-                streams.push(
-                    gulp.src(files.css)
-                        .pipe(plumber())
-                        .pipe(concat('vendor.min.css'))
-                        .pipe(minifyCSS({keepBreaks:true}))
-                        .pipe(rename(function(path) {
-                            path.dirname = "css";
-                            gutil.log("Output: " + gutil.colors.yellow(path.dirname + "/" + path.basename + path.extname));
-                        }))
-                );
-                break;
-        }
+    if (files["css"]) {
+        //Concat all the Bower CSS libs
+        gutil.log("Package CSS");
+        logFiles(files["css"]);
+        streams.push(
+            gulp.src(files.css)
+                .pipe(plumber())
+                .pipe(concat('vendor.min.css'))
+                .pipe(minifyCSS({keepBreaks: true}))
+                .pipe(rename(function (path) {
+                    path.dirname = "css";
+                    gutil.log("Output: " + gutil.colors.yellow(path.dirname + "/" + path.basename + path.extname));
+                }))
+        );
     }
 
     //Output the vendor files to the dist directory.

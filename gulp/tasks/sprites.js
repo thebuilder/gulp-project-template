@@ -8,14 +8,14 @@ var config = require('../config.js');
 
 gulp.task('sprites', ['generate-sprites'], function () {
     //After the sprites have beeen generated, copy them to the image directory.
-    return gulp.src(config.src + '/sprites/img/*.*')
+    return gulp.src(config.src + 'sprites/img/*.*')
         .pipe(plumber())
         .pipe(imagemin())
-        .pipe(gulp.dest(config.dist + '/' + config.imgDir));
+        .pipe(gulp.dest(config.dist + config.imgDir));
 });
 
 gulp.task('generate-sprites', function () {
-    return gulp.src(config.src + '/sprites/svgs/**/*.svg')
+    return gulp.src(config.src + 'sprites/svgs/**/*.svg')
         .pipe(plumber())
         .pipe(svg({
             className: '.icon-%f',
@@ -27,6 +27,6 @@ gulp.task('generate-sprites', function () {
                 sprite: "svg-sprites.html"
             }
         }))
-        .pipe(gulp.dest(config.src + '/sprites'))
+        .pipe(gulp.dest(config.src + 'sprites'))
         .pipe(png());
 });
