@@ -126,3 +126,32 @@ Watch for changes, and run respective tasks.
 ####zip
 Make a .zip file containing the build content. It will be placed in the **releases/** directory, name with information from the **package.json** file:
 **[name]_[version].zip**
+
+
+##Spritesheets
+**gulp-svg-sprites** is used create a sprite sheet from .svg files, outputting both an .svg and .png spritesheet.
+
+###Including CSS
+A CSS file is generated with classes for all the sprites. You should include this in the app.less file:
+
+    @import (less) "../sprites/css/_sprites.css";
+
+### Preparing SVG's
+Make sure to crop the SVG, and set the correct pixel dimensions before exporting.
+
+#### Illustrator
+Save your file as SVG with the following settings:
+
+- SVG Profiles: SVG 1.1
+- Fonts Type: SVG
+- Fonts Subsetting: None
+- Options Image Location: Embed
+- Advanced Options
+  - CSS Properties: Presentation Attributes
+  - Decimal Places: 1
+  - Encoding: UTF-8
+  - Output fewer <tspan> elements: check
+
+Leave the rest unchecked.
+
+More in-depth information: [http://www.adobe.com/inspire/2013/09/exporting-svg-illustrator.html](http://www.adobe.com/inspire/2013/09/exporting-svg-illustrator.html)

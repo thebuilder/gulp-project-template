@@ -12,7 +12,6 @@ gulp.task('assets', function () {
     return gulp.src([
             'fonts/**',
             'thirdparty/**',
-            '/img/**/{*.svg}',
             '!**/*.md'
         ], {cwd:config.src, base:"./src"})
 

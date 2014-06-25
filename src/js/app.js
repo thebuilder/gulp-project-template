@@ -1,5 +1,5 @@
-var basicModule= require("./modules/basicModule");
-var ClassModule = require("./modules/classModule");
+var basicModule= require("./examples/basicModule");
+var ClassModule = require("./examples/classModule");
 
 //Require the global module, provided externally
 require("tweenmax");

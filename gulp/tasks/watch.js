@@ -10,6 +10,9 @@ gulp.task('watch', function () {
 	watch({glob:config.src + '/'+ config.imgDir + '/**', name:"Images", emitOnGlob:false}, ['images']);
 	watch({glob:'bower_components/**/{*.js,*.css}', name:"Bower", emitOnGlob:false}, ['bower']);
 
+    //Uncomment to watch for changes to sprites
+	//watch({glob:config.src + '/sprites/svgs/**/*.svg', name:"Sprites", emitOnGlob:false}, ['sprites']);
+
 	//JADE
     watch({glob:[config.src + '/views/**', "!" + config.src + '/' + config.jadeLocals + "*.json"], name:"JADE", emitOnGlob:false}, ['jade']);
     watch({glob:config.src + '/' + config.jadeLocals + "*.json", name:"JADE Locals", emitOnGlob:false}, function() {

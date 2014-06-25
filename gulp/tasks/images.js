@@ -10,7 +10,7 @@ var config     = require('../config');
 gulp.task('images', function() {
 	var dest = config.dist + '/' + config.imgDir;
 
-	return gulp.src(config.src + '/' + + config.imgDir+ '/**/{*.png,*.jpg,*.gif}')
+	return gulp.src(config.src + '/' + config.imgDir + '/**/{*.png,*.jpg,*.gif,*.svg}')
         .pipe(plumber())
 		.pipe(changed(dest)) // Ignore unchanged files
 		.pipe(imagemin()) // Optimize
