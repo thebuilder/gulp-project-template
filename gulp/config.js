@@ -29,7 +29,7 @@ module.exports = {
     jadeLocals: 'data/',
 
     //Only recompiles Jade pages if it has been changed. Changing data/included files will not trigger a rebuild if this set to true.
-    onlyCompiledChangedPages: false,
+    onlyCompileChangedPages: false,
 
     //Runtime vars. These are used by tasks.
     isReleaseBuild: false

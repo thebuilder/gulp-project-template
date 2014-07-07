@@ -47,9 +47,12 @@
     "gulp-uglify": "~0.3.1",
     "gulp-ftp": "~0.3.0",
     "gulp-zip": "~0.3.4",
+    "gulp-svg-sprites": "~0.1.2",
     "gulp-jshint": "~1.6.3",
     "jshint-stylish": "~0.2.0",
-    "gulp-svg-sprites": "~0.1.2"
+    "stripify": "~1.2.0",
+    "mold-source-map": "~0.3.0",
+    "watchify": "~0.10.2"
   },
   "dependencies": {}
 }

@@ -5,10 +5,13 @@ var watch       = require('gulp-watch');
 var config = require('../config');
 
 gulp.task('watch', function () {
-	watch({glob:config.src + config.jsDir + '**', name:"JS", emitOnGlob:false}, ['browserify']);
+	watch({glob:config.src + config.jsDir + '**', name:"JS", emitOnGlob:false}, ['lint']);
 	watch({glob:config.src + config.lessDir + '**', name:"LESS", emitOnGlob:false}, ['less']);
 	watch({glob:config.src + config.imgDir + '**', name:"Images", emitOnGlob:false}, ['images']);
 	watch({glob:'bower_components/**/{*.js,*.css}', name:"Bower", emitOnGlob:false}, ['bower']);
+
+    //Run the watchify task to look for changes.
+    gulp.start("watchify");
 
     //Uncomment to watch for changes to sprites
 	//watch({glob:config.src + '/sprites/svgs/**/*.svg', name:"Sprites", emitOnGlob:false}, ['sprites']);
@@ -22,7 +25,7 @@ gulp.task('watch', function () {
         config.src + 'thirdparty/**'
     ], name:"Assets", emitOnGlob:false}, ['assets']);
 
-    //Watch the build directories for changes, and execute LiveReload.
+    //LIVER RELOAD - Watch the build directories for changes, and execute LiveReload.
 	watch({glob:[config.dist + '**'], name:"LiveReload", emitOnGlob:false})
         .pipe(livereload()); //Execute a LiveReload on changed files in build directory
 });
