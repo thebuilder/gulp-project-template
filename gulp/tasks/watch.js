@@ -13,9 +13,6 @@ gulp.task('watch', function () {
     //Run the watchify task to look for changes.
     gulp.start("watchify");
 
-    //Uncomment to watch for changes to sprites
-	//watch({glob:config.src + '/sprites/svgs/**/*.svg', name:"Sprites", emitOnGlob:false}, ['sprites']);
-
 	//JADE
     watch({glob:[config.src + 'views/**'], name:"JADE", emitOnGlob:false}, ['jade']);
 
