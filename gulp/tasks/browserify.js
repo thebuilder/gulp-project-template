@@ -1,10 +1,12 @@
 var gulp         = require('gulp');
-var plumber         = require('gulp-plumber');
+var plumber      = require('gulp-plumber');
+var gutil        = require('gulp-util');
 var browserify   = require('browserify');
 var watchify     = require('watchify');
 var mold         = require('mold-source-map');
-//var exorcist     = require('exorcist');
+var path         = require("path");
 var source       = require('vinyl-source-stream');
+
 var handleErrors = require('../util/handleErrors');
 var config       = require('../config');
 
@@ -44,6 +46,11 @@ function compile(watch) {
 
     //Wrap the bundle method in a function, so it can be called by watchify
     var rebundle = function () {
+        if (files) {
+            for (var i = 0; i < files.length; i++) {
+                gutil.log("Watchify: " + gutil.colors.yellow(path.relative(config.src, files[i])));
+            }
+        }
        bundler.bundle({debug: !config.isReleaseBuild})
             .on('error', handleErrors)
             .pipe(plumber())
@@ -54,5 +61,5 @@ function compile(watch) {
     };
 
     if (watch) bundler.on('update', rebundle);
-    else return rebundle();
+    return rebundle();
 }
