@@ -3,12 +3,13 @@ var path = require('path');
 module.exports = {
     server: {
         root: path.resolve('./dist/'),
+        indexFile: 'index.html',
         port: '8080',
         log: true,
 
         //Auto open browser on gulp run?
         openBrowser: true,
-        browser: "google chrome canary"
+        browser: 'google chrome canary'
     },
 
     //Paths

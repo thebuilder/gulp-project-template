@@ -29,11 +29,11 @@
     "gulp": "~3.6.2",
     "gulp-changed": "~0.3.0",
     "gulp-less": "~1.1.8",
-    "gulp-autoprefixer": "0.0.7",
+    "gulp-autoprefixer": "0.0.8",
     "gulp-recess": "~0.3.1",
     "gulp-imagemin": "~0.6.1",
     "gulp-livereload": "~1.2.0",
-    "gulp-notify": "~1.2.4",
+    "gulp-notify": "~1.4.0",
     "gulp-plumber": "~0.6.1",
     "gulp-clean": "~0.2.4",
     "gulp-util": "~2.2.14",
@@ -51,7 +51,8 @@
     "jshint-stylish": "~0.2.0",
     "stripify": "~1.2.0",
     "mold-source-map": "~0.3.0",
-    "watchify": "~0.10.2"
+    "watchify": "~0.10.2",
+    "gulp-cached": "0.0.3"
   },
   "dependencies": {}
 }

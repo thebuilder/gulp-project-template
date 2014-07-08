@@ -2,7 +2,7 @@ var gulp    = require('gulp');
 var open    = require("gulp-open");
 var config  = require('../config');
 
-gulp.task('open', ['build'], function() {
+gulp.task('open', function() {
     if (!config.server.openBrowser) return null;
 
 	var options = {
@@ -10,5 +10,6 @@ gulp.task('open', ['build'], function() {
 		app: config.server.browser
 	};
 
-	return gulp.src(config.server.root + "index.html").pipe(open("", options));
+	return gulp.src(config.dist + config.server.indexFile)
+        .pipe(open("", options));
 });

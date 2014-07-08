@@ -1,23 +1,22 @@
-var gulp         = require('gulp');
-var plumber      = require('gulp-plumber');
-var gutil        = require('gulp-util');
-var browserify   = require('browserify');
-var watchify     = require('watchify');
-var mold         = require('mold-source-map');
-var path         = require("path");
-var source       = require('vinyl-source-stream');
+var gulp = require('gulp');
+var gutil = require('gulp-util');
+var browserify = require('browserify');
+var watchify = require('watchify');
+var mold = require('mold-source-map');
+var path = require("path");
+var source = require('vinyl-source-stream');
 
 var handleErrors = require('../util/handleErrors');
-var config       = require('../config');
+var config = require('../config');
 
 /**
  * Browserify should always depend on lint, to ensure JS is looking good.
  */
-gulp.task('browserify', function(){
+gulp.task('browserify', function () {
     compile(false);
 });
 
-gulp.task('watchify', function(){
+gulp.task('watchify', function () {
     compile(true);
 });
 
@@ -45,17 +44,15 @@ function compile(watch) {
     }
 
     //Wrap the bundle method in a function, so it can be called by watchify
-    var rebundle = function () {
+    var rebundle = function (files) {
         if (files) {
             for (var i = 0; i < files.length; i++) {
                 gutil.log("Watchify: " + gutil.colors.yellow(path.relative(config.src, files[i])));
             }
         }
-       bundler.bundle({debug: !config.isReleaseBuild})
+        bundler.bundle({debug: !config.isReleaseBuild})
             .on('error', handleErrors)
-            .pipe(plumber())
-            .pipe(mold.transformSourcesRelativeTo(config.dist))
-            //.pipe(exorcist(config.dist + "js/script.min.js.map"))
+            .pipe(mold.transformSourcesRelativeTo(config.dist)).on('error', handleErrors)
             .pipe(source(config.mainJs))
             .pipe(gulp.dest(config.dist + config.jsDir));
     };
