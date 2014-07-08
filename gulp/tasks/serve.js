@@ -15,5 +15,5 @@ gulp.task('serve', function(){
 
     var server = http.createServer(app);
     server.listen(config.server.port);
-    server.on("error", handleErrors);
+    server.on("error", handleErrors, false);
 });

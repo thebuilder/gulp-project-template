@@ -2,7 +2,7 @@ var notify = require("gulp-notify");
 var gutil = require('gulp-util');
 
 module.exports = function() {
-	var args = Array.prototype.slice.call(arguments) || {};
+    var args = Array.prototype.slice.call(arguments) || {};
 
     var isWindows = /^win/.test(require('os').platform());
     if (!isWindows) {
@@ -18,6 +18,7 @@ module.exports = function() {
         gutil.log("[" +  gutil.colors.blue("Compile Error") + "] " + gutil.colors.red.apply(this, args) )
     }
 
-	// Keep gulp from hanging on this task
-	this.emit('end');
+    if (typeof this.emit != "undefined") {
+        this.emit('end');
+    }
 };

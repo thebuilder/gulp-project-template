@@ -49,10 +49,13 @@ function compile(watch) {
             for (var i = 0; i < files.length; i++) {
                 gutil.log("Watchify: " + gutil.colors.yellow(path.relative(config.src, files[i])));
             }
-        }
+        } else if (watch) return null; //Don't bundle if watchify and no file changes.
+
         bundler.bundle({debug: !config.isReleaseBuild})
-            .on('error', handleErrors)
-            .pipe(mold.transformSourcesRelativeTo(config.dist)).on('error', handleErrors)
+            .on('error', function(error) {
+                handleErrors(error); //Break the pipe by placing error handler outside
+            })
+            .pipe(mold.transformSourcesRelativeTo(config.dist))
             .pipe(source(config.mainJs))
             .pipe(gulp.dest(config.dist + config.jsDir));
     };
