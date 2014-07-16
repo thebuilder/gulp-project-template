@@ -3,8 +3,9 @@ var gutil = require('gulp-util');
 var browserify = require('browserify');
 var watchify = require('watchify');
 var mold = require('mold-source-map');
-var path = require("path");
 var source = require('vinyl-source-stream');
+var path = require("path");
+var glob = require('glob');
 
 var handleErrors = require('../util/handleErrors');
 var config = require('../config');
@@ -20,6 +21,19 @@ gulp.task('watchify', function () {
     compile(true);
 });
 
+gulp.task('browserify-test', function () {
+    compileTestBundle(false);
+});
+
+gulp.task('watchify-test', function () {
+    compileTestBundle(true);
+});
+
+
+/**
+ * Compile and browserify the app main JS file
+ * @param watch
+ */
 function compile(watch) {
     var bundler;
     if (watch) {
@@ -45,11 +59,7 @@ function compile(watch) {
 
     //Wrap the bundle method in a function, so it can be called by watchify
     var rebundle = function (files) {
-        if (files) {
-            for (var i = 0; i < files.length; i++) {
-                gutil.log("Watchify: " + gutil.colors.yellow(path.relative(config.src, files[i])));
-            }
-        } else if (watch) return null; //Don't bundle if watchify and no file changes.
+        logFiles(files, "Watchify:");
 
         bundler.bundle({debug: !config.isReleaseBuild})
             .on('error', function(error) {
@@ -62,4 +72,50 @@ function compile(watch) {
 
     if (watch) bundler.on('update', rebundle);
     return rebundle();
+}
+
+/**
+ * Compile and browserify the test files into a bundle
+ * @param watch
+ **/
+
+function compileTestBundle(watch) {
+    //Glob all spec files. Returns array with all the files.
+    var testFiles = glob.sync("./" + config.src + config.jsDir + '**/*.spec.js');
+
+    var bundler;
+    if (watch) {
+        bundler = watchify(testFiles);
+    } else {
+        bundler = browserify(testFiles);
+    }
+
+    //Wrap the bundle method in a function, so it can be called by watchify
+    var rebundle = function (files) {
+        logFiles(files, "Testify:");
+
+        bundler.bundle({debug: true})
+            .on('error', function (error) {
+                handleErrors(error); //Break the pipe by placing error handler outside
+            })
+            .pipe(mold.transformSourcesRelativeTo(config.test))
+            .pipe(source('test.bundle.js'))
+            .pipe(gulp.dest(config.test));
+    };
+
+    if (watch) bundler.on('update', rebundle);
+    return rebundle();
+}
+
+/**
+ * Console log all files in the array.
+ * @param files {Array}
+ * @param label {String}
+ */
+function logFiles(files, label) {
+    if (files) {
+        for (var i = 0; i < files.length; i++) {
+            gutil.log((label  ? label + " ": "") + gutil.colors.magenta(path.relative(config.src, files[i])));
+        }
+    }
 }

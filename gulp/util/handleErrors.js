@@ -1,10 +1,10 @@
 var notify = require("gulp-notify");
 var gutil = require('gulp-util');
+var isWindows = /^win/.test(require('os').platform());
 
 module.exports = function() {
     var args = Array.prototype.slice.call(arguments) || {};
 
-    var isWindows = /^win/.test(require('os').platform());
     if (!isWindows) {
         // Send error to notification center with gulp-notify
         notify.onError({

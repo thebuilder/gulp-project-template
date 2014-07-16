@@ -114,6 +114,18 @@ Compile the main less file, and attach source maps. The .less files are run thro
 ####lint
 Run the .js files through JSHint, using the settings in **.jshintrc**. Change these to suit the project.
 
+####karma
+Tasks that start a Karma server up using the **karma.conf.js** configuration. Will also compile the code using browserify. It exposes the following tasks.
+
+
+Single run test:
+
+	test
+	
+To keep watching for changes:
+	
+	test-watch
+
 ####open
 Opens the browser and navigate to the local server.
 
@@ -126,3 +138,35 @@ Watch for changes, and run respective tasks.
 ####zip
 Make a .zip file containing the build content. It will be placed in the **releases/** directory, name with information from the **package.json** file:
 **[name]_[version].zip**
+
+##Karma+Jasmine Testing
+The project is configured to use Karma and Jasmine for testing.
+
+A special browserify task is configured to compile all **\*.spec.js** files in the src directory. This allows you to use **require()** when testing, which could be useful for things like:
+
+* Require specific **.js** files when testing, instead of retrieving them from the compiled **app.js**
+* Include dummy **.json** files when parsing data.
+* Include dummy **.html** or **.jade** files.
+
+The compiled **test.bundle.js** file includes a source map, so it will log the original file position when an error occurs.
+
+
+
+###Karma
+Karma is the engine that loads the **.js** and executes the tests.
+
+All the karma specific configuration is located in the **karma.conf.js** file in the project root. When running the karma gulp tasks you can override these options.
+
+###Jasmine
+Jasmine is the framework used to write the tests. It is explained and demonstrated on their own website: 
+[Jasmine 2.0](http://jasmine.github.io/2.0/introduction.html) 
+
+A simple test could look like: 
+
+```
+describe("A suite", function() {
+  it("contains spec with an expectation", function() {
+    expect(true).toBe(true);
+  });
+});
+```

@@ -15,7 +15,7 @@ var gulp = require('gulp');
 require('./gulp');
 
 //Build and start watching for changes
-gulp.task('default', ['build', 'watch', 'serve', 'open']);
+gulp.task('default', ['build', 'watch', 'test-watch', 'serve', 'open']);
 
 //All build tasks
 gulp.task('build', ['browserify', 'jade', 'less', 'bower', 'images', 'assets']);
@@ -30,4 +30,4 @@ gulp.task('release', function() {
 });
 
 //Create a release build, zip and upload it
-gulp.task('deploy', ['release', 'zip', 'ftp']);
+gulp.task('deploy', ['release', 'test', 'zip', 'ftp']);

@@ -4,8 +4,8 @@
  * @param $scope
  * @constructor
  */
-function ExampleController($scope) {
+function AngularController($scope) {
     $scope.message = "Controller says hello";
 }
 
-module.exports = ExampleController;
+module.exports = AngularController;

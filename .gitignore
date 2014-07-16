@@ -8,3 +8,5 @@ bower_components
 
 //Build directory
 dist
+
+test/test.bundle.js

@@ -15,6 +15,7 @@ module.exports = {
     //Paths
     src: 'src/',
     dist: 'dist/',
+    test: 'test/',
     releases: 'releases/',
 
     //Content dirs
@@ -27,7 +28,7 @@ module.exports = {
     mainLess: 'app.less',
     mainJs: 'app.js',
     jadeFiles: '*.jade',
-    jadeLocals: 'data/',
+    jadeData: 'data/',
 
     //Only recompiles Jade pages if it has been changed. Changing data/included files will not trigger a rebuild if this set to true.
     onlyCompileChangedPages: false,

@@ -16,4 +16,4 @@ console.log(jsonData.header);
 //Example of requiring a Angular Controller by using require.
 var angular = require("angular");
 angular.module("gulpApp", [])
-    .controller("exampleController", require("./examples/angularController"));
+    .controller("angularController", require("./examples/angularController"));
