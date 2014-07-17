@@ -3,7 +3,7 @@ var path = require('path');
 
 var karma = require('karma').server;
 
-gulp.task('test', ['browserify-test'], function() {
+gulp.task('test', ['testify'], function() {
     karma.start({
         configFile: path.resolve('karma.conf.js'),
         singleRun: true
@@ -12,7 +12,7 @@ gulp.task('test', ['browserify-test'], function() {
     });
 });
 
-gulp.task('test-watch', ['watchify-test'], function() {
+gulp.task('test-watch', ['testify-watch'], function() {
     karma.start({
         configFile: path.resolve('karma.conf.js'),
         singleRun: false,

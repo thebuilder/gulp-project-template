@@ -114,7 +114,7 @@ Compile the main less file, and attach source maps. The .less files are run thro
 ####lint
 Run the .js files through JSHint, using the settings in **.jshintrc**. Change these to suit the project.
 
-####karma
+####test
 Tasks that start a Karma server up using the **karma.conf.js** configuration. Will also compile the code using browserify. It exposes the following tasks.
 
 

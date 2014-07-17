@@ -21,11 +21,11 @@ gulp.task('watchify', function () {
     compile(true);
 });
 
-gulp.task('browserify-test', function () {
+gulp.task('testify', function () {
     compileTestBundle(false);
 });
 
-gulp.task('watchify-test', function () {
+gulp.task('testify-watch', function () {
     compileTestBundle(true);
 });
 
