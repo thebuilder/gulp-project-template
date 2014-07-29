@@ -1,8 +1,9 @@
 var gulp    = require('gulp');
-var open    = require("gulp-open");
-var config  = require('../config');
 
-gulp.task('open', function() {
+gulp.task('open', ['serve'], function() {
+    var open    = require("gulp-open");
+    var config  = require('../config');
+
     if (!config.server.openBrowser) return null;
 
 	var options = {

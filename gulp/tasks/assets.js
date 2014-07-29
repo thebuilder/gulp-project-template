@@ -1,12 +1,13 @@
 var gulp         = require('gulp');
-var changed      = require('gulp-changed');
-var plumber      = require('gulp-plumber');
-var config       = require('../config');
 
 /**
  * Copy all assets from the following dirs to build directory
  **/
 gulp.task('assets', function () {
+    var changed      = require('gulp-changed');
+    var plumber      = require('gulp-plumber');
+    var config       = require('../config');
+
     var dest = config.dist + '/';
 
     return gulp.src([

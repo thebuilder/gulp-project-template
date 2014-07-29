@@ -12,10 +12,15 @@ module.exports = {
         browser: 'google chrome canary'
     },
 
+    test: {
+        root: 'test/',
+        e2e: ['src/**/*.scenario.js',
+            'test/**/*.scenario.js']
+    },
+
     //Paths
     src: 'src/',
     dist: 'dist/',
-    test: 'test/',
     releases: 'releases/',
 
     //Content dirs
@@ -28,10 +33,7 @@ module.exports = {
     mainLess: 'app.less',
     mainJs: 'app.js',
     jadeFiles: '*.jade',
-    jadeData: 'data/',
-
-    //Only recompiles Jade pages if it has been changed. Changing data/included files will not trigger a rebuild if this set to true.
-    onlyCompileChangedPages: false,
+    jadeData: 'views/data/',
 
     //Runtime vars. These are used by tasks.
     isReleaseBuild: false

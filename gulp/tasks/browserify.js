@@ -1,11 +1,12 @@
 var gulp = require('gulp');
+var gulpif = require('gulp-if');
 var gutil = require('gulp-util');
-var browserify = require('browserify');
-var watchify = require('watchify');
 var mold = require('mold-source-map');
 var source = require('vinyl-source-stream');
 var path = require("path");
 var glob = require('glob');
+var filter = require('gulp-filter');
+var es = require('event-stream');
 
 var handleErrors = require('../util/handleErrors');
 var config = require('../config');
@@ -17,15 +18,16 @@ gulp.task('browserify', function () {
     compile(false);
 });
 
-gulp.task('watchify', function () {
+gulp.task('watchify', ['build'], function () {
     compile(true);
 });
 
-gulp.task('testify', function () {
+gulp.task('testify', ['build'], function () {
     compileTestBundle(false);
 });
 
-gulp.task('testify-watch', function () {
+gulp.task('testify-watch', ['build'], function () {
+    fileChangeWatcher();
     compileTestBundle(true);
 });
 
@@ -37,9 +39,9 @@ gulp.task('testify-watch', function () {
 function compile(watch) {
     var bundler;
     if (watch) {
-        bundler = watchify();
+        bundler = require('watchify')();
     } else {
-        bundler = browserify();
+        bundler = require('browserify')();
     }
 
     bundler.add("./" + config.src + config.jsDir + config.mainJs);
@@ -60,51 +62,76 @@ function compile(watch) {
     //Wrap the bundle method in a function, so it can be called by watchify
     var rebundle = function (files) {
         logFiles(files, "Watchify:");
-
         bundler.bundle({debug: !config.isReleaseBuild})
             .on('error', function(error) {
                 handleErrors(error); //Break the pipe by placing error handler outside
             })
-            .pipe(mold.transformSourcesRelativeTo(config.dist))
+            .pipe(gulpif(!config.isReleaseBuild, mold.transformSourcesRelativeTo(config.src)))
             .pipe(source(config.mainJs))
-            .pipe(gulp.dest(config.dist + config.jsDir));
+            .pipe(gulp.dest(config.dist + "js"));
     };
 
     if (watch) bundler.on('update', rebundle);
     return rebundle();
 }
 
+var testBundler;
 /**
  * Compile and browserify the test files into a bundle
  * @param watch
  **/
-
 function compileTestBundle(watch) {
-    //Glob all spec files. Returns array with all the files.
-    var testFiles = glob.sync("./" + config.src + config.jsDir + '**/*.spec.js');
-
-    var bundler;
     if (watch) {
-        bundler = watchify(testFiles);
+        testBundler = require('watchify')(getTestFiles());
     } else {
-        bundler = browserify(testFiles);
+        testBundler = require('browserify')(getTestFiles());
     }
 
     //Wrap the bundle method in a function, so it can be called by watchify
     var rebundle = function (files) {
         logFiles(files, "Testify:");
 
-        bundler.bundle({debug: true})
+        testBundler.bundle({debug: true})
             .on('error', function (error) {
                 handleErrors(error); //Break the pipe by placing error handler outside
             })
-            .pipe(mold.transformSourcesRelativeTo(config.test))
             .pipe(source('test.bundle.js'))
-            .pipe(gulp.dest(config.test));
+            .pipe(gulp.dest(config.test.root))
     };
 
-    if (watch) bundler.on('update', rebundle);
+    if (watch) testBundler.on('update', rebundle);
     return rebundle();
+}
+
+function fileChangeWatcher() {
+    var watch = require('gulp-watch');
+
+    //Watch for new spec.js files, and sync the testify run. Otherwise new files will not be added.
+    watch({glob: config.src + '**/*.spec.js', name: 'TestJS', emitOnGlob: false, silent:true}, function (files) {
+        var firstSync;
+        //Filter out files that have changed. Only want added or deleted files.
+        files.pipe(filter(function (file) {
+            return file.event === 'added' || file.event === 'deleted' || file.event == 'renamed';
+        }))
+            .pipe(es.map(function (data, cb) { //turn this async function into a stream
+                if (!firstSync) {
+                    firstSync = true;
+                    //Trigger the syncTestFiles if files have changed
+                    testBundler.files = getTestFiles();
+                    testBundler.emit('update');
+                }
+                cb(null, data);
+            }));
+    }).on("error", function(e) {});
+}
+
+function getTestFiles() {
+    var testFiles = glob.sync("./" + config.src + config.jsDir + '**/*.spec.js');
+    //Glob all spec files. Returns array with all the files.
+    for (var i = 0; i < testFiles.length; i++) {
+        testFiles[i] = path.resolve(testFiles[i]);
+    }
+    return testFiles;
 }
 
 /**

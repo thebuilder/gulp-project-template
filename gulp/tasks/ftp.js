@@ -1,12 +1,4 @@
 var gulp = require("gulp");
-var gutil = require('gulp-util');
-var ftp = require("gulp-ftp");
-var plumber = require("gulp-plumber");
-
-//Read data
-var config = require("../config");
-var ftpTargets = require('../.ftp.json');
-var argv = require('minimist')(process.argv.slice(2));
 
 /**
  * The deploy reads FTP details from '.ftp.json', and uploads the config.dist directory.
@@ -26,6 +18,15 @@ var argv = require('minimist')(process.argv.slice(2));
  }]
  **/
 gulp.task('ftp', ["build"], function () {
+    var gutil = require('gulp-util');
+    var ftp = require("gulp-ftp");
+    var plumber = require("gulp-plumber");
+
+    //Read data
+    var config = require("../config");
+    var ftpTargets = require('../.ftp.json');
+    var argv = require('minimist')(process.argv.slice(2));
+
     if (!ftpTargets) {
         gutil.log(gutil.colors.red("Error:"), "No '.ftp.json' file found. Make sure it is created.");
         return null;

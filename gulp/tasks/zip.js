@@ -1,11 +1,12 @@
 var gulp = require("gulp");
-var gutil = require('gulp-util');
-var zip = require("gulp-zip");
 
-var pck = require("../../package.json");
-var config = require("../config");
+gulp.task('zip', ["release", "test"], function () {
+    var gutil = require('gulp-util');
+    var zip = require("gulp-zip");
 
-gulp.task('zip', ["build"], function () {
+    var pck = require("../../package.json");
+    var config = require("../config");
+
     var version = pck.version.split(".").join("_");
     var zipFile = pck.name + "_" + version + ".zip";
     gutil.log("Packing zip file:", gutil.colors.yellow(config.releases + zipFile));
