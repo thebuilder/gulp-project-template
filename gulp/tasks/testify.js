@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var gutil = require('gulp-util');
 var source = require('vinyl-source-stream');
 var path = require("path");
+var glob = require('glob');
 
 var handleErrors = require('../util/handleErrors');
 var config = require('../config');
@@ -47,7 +48,6 @@ function compileTestBundle(watch) {
 function fileChangeWatcher() {
     var watch = require('gulp-watch');
     var filter = require('gulp-filter');
-    var glob = require('glob');
     var es = require('event-stream');
 
     //Watch for new spec.js files, and sync the testify run. Otherwise new files will not be added.
