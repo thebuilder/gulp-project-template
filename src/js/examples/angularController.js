@@ -6,6 +6,7 @@
  */
 function AngularController($scope) {
     $scope.message = "Controller says hello";
+    console.log("Test");
 }
 
 module.exports = AngularController;

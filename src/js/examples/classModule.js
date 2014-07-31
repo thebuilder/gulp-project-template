@@ -5,11 +5,8 @@
  * @constructor
  */
 function ClassModule() {
-    /**
-     * Say hello!
-     */
     function greeting() {
-        console.log("Hello world");
+
     }
 
     /**

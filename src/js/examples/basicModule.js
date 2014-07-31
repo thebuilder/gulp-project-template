@@ -9,6 +9,7 @@ module.exports = {
      */
     init: function() {
         return privateMethod();
+
     },
     dispose: function() {
     },

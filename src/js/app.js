@@ -11,7 +11,7 @@ instance.greeting();
 
 //You can also include external .json data.
 var jsonData = require("../views/data/data.json");
-console.log(jsonData.header);
+//console.log(jsonData.header);
 
 //Example of requiring a Angular Controller by using require.
 var angular = require("angular");
