@@ -12,7 +12,7 @@ gulp.task('less', function () {
     var config       = require('../config');
     var handleErrors = require('../util/handleErrors');
 
-    return gulp.src([config.src + config.lessDir + config.mainLess])
+    return gulp.src(config.less.src)
         .pipe(plumber({errorHandler:handleErrors}))
         .pipe(sourcemaps.init())
         .pipe(less())
@@ -20,5 +20,5 @@ gulp.task('less', function () {
         //Auto add vendor prefixes. See https://www.npmjs.org/package/gulp-autoprefixer for details on defining browser support
         .pipe(gulpif(config.isReleaseBuild, autoprefixer())) //Autoprefixer does not work with gulp-sourcemaps yet, so skip it untill release build.
         .pipe(gulpif(config.isReleaseBuild, minifyCSS({keepBreaks:true})))
-        .pipe(gulp.dest(config.dist + 'css'))
+        .pipe(gulp.dest(config.dist + config.less.dir))
 });

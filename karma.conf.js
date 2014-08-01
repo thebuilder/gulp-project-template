@@ -15,6 +15,7 @@ module.exports = function (config) {
             'dist/js/vendor.min.js',
             'dist/js/app.js',
             'bower_components/angular-mocks/angular-mocks.js',
+            'test/test.globals.js',
             'test/test.bundle.js'
         ],
 

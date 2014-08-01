@@ -9,9 +9,9 @@ gulp.task('images', function() {
     var plumber   = require('gulp-plumber');
     var config     = require('../config');
 
-	var dest = config.dist + config.imgDir;
+	var dest = config.dist + config.img.dir;
 
-	return gulp.src(config.src + config.imgDir + '**/{*.png,*.jpg,*.gif,*.svg}')
+	return gulp.src(config.img.src)
         .pipe(plumber())
 		.pipe(changed(dest)) // Ignore unchanged files
 		.pipe(imagemin()) // Optimize

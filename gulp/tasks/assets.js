@@ -10,11 +10,7 @@ gulp.task('assets', function () {
 
     var dest = config.dist + '/';
 
-    return gulp.src([
-            'fonts/**',
-            'thirdparty/**',
-            '!**/*.md'
-        ], {cwd:config.src, base:"./src"})
+    return gulp.src(config.assets.src, {cwd:config.src, base:"./src"})
 
         .pipe(plumber())
         .pipe(changed(dest)) // Ignore unchanged files

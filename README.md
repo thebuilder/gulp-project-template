@@ -148,7 +148,7 @@ A special browserify task is configured to compile all **\*.spec.js** files in t
 * Include dummy **.json** files when parsing data.
 * Include dummy **.html** or **.jade** files.
 
-The compiled **test.bundle.js** file includes a source map, so it will log the original file position when an error occurs.
+The compiled **test.bundle.js** file includes a source map, so it will log the original file position if an error occurs.
 
 
 

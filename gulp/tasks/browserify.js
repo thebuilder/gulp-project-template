@@ -4,6 +4,7 @@ var gutil = require('gulp-util');
 var mold = require('mold-source-map');
 var source = require('vinyl-source-stream');
 var path = require("path");
+var extend = require("extend");
 
 var handleErrors = require('../util/handleErrors');
 var config = require('../config');
@@ -25,14 +26,20 @@ gulp.task('watchify', ['build'], function () {
  * @param watch
  */
 function compile(watch) {
+    var watchify = require('watchify');
+    var browserify = require('browserify');
+
+    var opts = {debug:!config.isReleaseBuild};
     var bundler;
     if (watch) {
-        bundler = require('watchify')();
+        //bundler = watchify(browserify(extend(opts, watchify.args)));
+        bundler = watchify();
     } else {
-        bundler = require('browserify')();
+        bundler = browserify();
     }
 
-    bundler.add("./" + config.src + config.jsDir + config.mainJs);
+    //bundler.add(path.resolve(config.js.src));
+    bundler.add("./" + config.js.src);
 
     if (config.isReleaseBuild) {
         //Strip debug statements
@@ -48,18 +55,20 @@ function compile(watch) {
     }
 
     //Wrap the bundle method in a function, so it can be called by watchify
-    var rebundle = function (files) {
-        logFiles(files, "Watchify:");
-        bundler.bundle({debug: !config.isReleaseBuild})
+    function rebundle() {
+        return bundler.bundle(opts)
             .on('error', function(error) {
                 handleErrors(error); //Break the pipe by placing error handler outside
             })
             .pipe(gulpif(!config.isReleaseBuild, mold.transformSourcesRelativeTo(config.src)))
-            .pipe(source(config.mainJs))
-            .pipe(gulp.dest(config.dist + "js"));
+            .pipe(source(config.js.name))
+            .pipe(gulp.dest(config.dist + config.js.dir));
     };
 
-    if (watch) bundler.on('update', rebundle);
+    if (watch) {
+        bundler.on('update', logFiles);
+        bundler.on('update', rebundle);
+    }
     return rebundle();
 }
 
@@ -68,12 +77,11 @@ function compile(watch) {
 /**
  * Console log all files in the array.
  * @param files {Array}
- * @param label {String}
  */
-function logFiles(files, label) {
+function logFiles(files) {
     if (files) {
         for (var i = 0; i < files.length; i++) {
-            gutil.log((label  ? label + " ": "") + gutil.colors.magenta(path.relative(config.src, files[i])));
+            gutil.log("Watchify: " + gutil.colors.magenta(path.relative(config.src, files[i])));
         }
     }
 }

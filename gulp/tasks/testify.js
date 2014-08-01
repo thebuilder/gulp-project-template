@@ -3,6 +3,7 @@ var gutil = require('gulp-util');
 var source = require('vinyl-source-stream');
 var path = require("path");
 var glob = require('glob');
+var extend = require("extend");
 
 var handleErrors = require('../util/handleErrors');
 var config = require('../config');
@@ -23,17 +24,20 @@ var testBundler;
  * @param watch
  **/
 function compileTestBundle(watch) {
+    var watchify = require('watchify');
+    var browserify = require('browserify');
+
+    var opts = {debug:true};
     if (watch) {
-        testBundler = require('watchify')(getTestFiles());
+//        testBundler = watchify(browserify(getTestFiles(), extend(opts, watchify.args)));
+        testBundler = watchify(getTestFiles());
     } else {
-        testBundler = require('browserify')(getTestFiles());
+        testBundler = browserify(getTestFiles());
     }
 
     //Wrap the bundle method in a function, so it can be called by watchify
-    var rebundle = function (files) {
-        logFiles(files, "Testify:");
-
-        testBundler.bundle({debug: true})
+    function rebundle () {
+        return testBundler.bundle(opts)
             .on('error', function (error) {
                 handleErrors(error); //Break the pipe by placing error handler outside
             })
@@ -41,7 +45,10 @@ function compileTestBundle(watch) {
             .pipe(gulp.dest(config.test.root))
     };
 
-    if (watch) testBundler.on('update', rebundle);
+    if (watch){
+        testBundler.on('update', logFiles);
+        testBundler.on('update', rebundle);
+    }
     return rebundle();
 }
 
@@ -51,7 +58,7 @@ function fileChangeWatcher() {
     var es = require('event-stream');
 
     //Watch for new spec.js files, and sync the testify run. Otherwise new files will not be added.
-    watch({glob: config.src + '**/*.spec.js', name: 'TestJS', emitOnGlob: false, silent:true}, function (files) {
+    watch({glob: config.test.spec, name: 'TestJS', emitOnGlob: false, silent:true}, function (files) {
         var firstSync;
         //Filter out files that have changed. Only want added or deleted files.
         files.pipe(filter(function (file) {
@@ -70,7 +77,7 @@ function fileChangeWatcher() {
 }
 
 function getTestFiles() {
-    var testFiles = glob.sync("./" + config.src + config.jsDir + '**/*.spec.js');
+    var testFiles = glob.sync("./" + config.test.spec);
     //Glob all spec files. Returns array with all the files.
     for (var i = 0; i < testFiles.length; i++) {
         testFiles[i] = path.resolve(testFiles[i]);
@@ -81,12 +88,11 @@ function getTestFiles() {
 /**
  * Console log all files in the array.
  * @param files {Array}
- * @param label {String}
  */
-function logFiles(files, label) {
+function logFiles(files) {
     if (files) {
         for (var i = 0; i < files.length; i++) {
-            gutil.log((label  ? label + " ": "") + gutil.colors.magenta(path.relative(config.src, files[i])));
+            gutil.log(("Testify: " + gutil.colors.magenta(path.relative(config.src, files[i]))));
         }
     }
 }

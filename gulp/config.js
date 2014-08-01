@@ -12,28 +12,46 @@ module.exports = {
         browser: 'google chrome canary'
     },
 
+    //Output directory
+    src: "src/",
+    dist: "dist/",
+
     test: {
         root: 'test/',
+        spec: 'src/**/*.spec.js',
         e2e: ['src/**/*.scenario.js',
             'test/**/*.scenario.js']
     },
 
-    //Paths
-    src: 'src/',
-    dist: 'dist/',
-    releases: 'releases/',
+    js: {
+       src: 'src/js/app.js',
+       dir: 'js',
+       name: 'app.js'
+    },
 
-    //Content dirs
-    jsDir: 'js/',
-    lessDir: 'less/',
-    imgDir: 'img/',
-    viewsDir: 'views/',
+    less: {
+       src: 'src/less/app.less',
+       dir: 'css',
+       name: 'app.less'
+    },
 
-    //Entry files
-    mainLess: 'app.less',
-    mainJs: 'app.js',
-    jadeFiles: '*.jade',
-    jadeData: 'views/data/',
+    jade: {
+       src: 'src/*.jade',
+       dir: 'views',
+       data: 'src/views/data/'
+    },
+
+    img: {
+        src: 'src/img/**/{*.png,*.jpg,*.gif,*.svg}',
+        dir: 'img'
+    },
+
+    assets: {
+      src: ['fonts/**',
+            'thirdparty/**',
+            '!**/*.md'
+      ]
+    },
 
     //Runtime vars. These are used by tasks.
     isReleaseBuild: false

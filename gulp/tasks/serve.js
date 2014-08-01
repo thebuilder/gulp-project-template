@@ -6,6 +6,7 @@ gulp.task('serve', ['build'], function(){
     var handleErrors = require('../util/handleErrors');
     var config  = require('../config');
 
+
     var app = connect();
     if (config.server.log) {
         //Log file requests to terminal
