@@ -109,7 +109,7 @@ Copy and minify images. Supports .png, .jpg, .gif and .svg.
 Compile the main jade file.
 
 ####less
-Compile the main less file, and attach source maps. The .less files are run through [RECESS](http://twitter.github.io/recess/) to ensure some sanity, and autoprefixes to add vendor tags. In release mode the css file will also be minified.
+Compile the main less file, and attach source maps. In release mode the .less files are run through AutoPrefix to add vendor tags, and it gets minified.
 
 ####lint
 Run the .js files through JSHint, using the settings in **.jshintrc**. Change these to suit the project.
@@ -120,11 +120,11 @@ Tasks that start a Karma server up using the **karma.conf.js** configuration. Wi
 
 Single run test:
 
-	test
+	gulp test
 	
 To keep watching for changes:
 	
-	test-watch
+	gulp test-watch
 
 ####open
 Opens the browser and navigate to the local server.
