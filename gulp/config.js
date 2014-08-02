@@ -15,6 +15,7 @@ module.exports = {
     //Output directory
     src: "src/",
     dist: "dist/",
+    releases: "releases/",
 
     test: {
         root: 'test/',
