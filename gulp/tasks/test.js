@@ -19,7 +19,7 @@ gulp.task('test', ['testify'], function(done) {
                 done();
             }
         });
-    }, 500);
+    }, 2000);
 });
 
 gulp.task('test-watch', ['testify-watch'], function(done) {
