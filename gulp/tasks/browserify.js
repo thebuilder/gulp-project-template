@@ -43,7 +43,7 @@ function compile(watch) {
 
     if (config.isReleaseBuild) {
         //Strip debug statements
-        bundler.transform("stripify").on('error', handleErrors);
+        bundler.transform("stripify");
 
         //Uglify when compiling for release
         bundler.transform({
@@ -51,7 +51,11 @@ function compile(watch) {
             mangle: false,
             exts: [".js"], //Only uglify .js files. Would break if .html or .json are required.
             ignore: []
-        }, 'uglifyify').on('error', handleErrors);
+        }, 'uglifyify');
+
+        bundler.transform({
+            exts: [".js"]
+        }, 'browserify-ngannotate');
     }
 
     //Wrap the bundle method in a function, so it can be called by watchify
@@ -63,7 +67,7 @@ function compile(watch) {
             .pipe(gulpif(!config.isReleaseBuild, mold.transformSourcesRelativeTo(config.src)))
             .pipe(source(config.js.name))
             .pipe(gulp.dest(config.dist + config.js.dir));
-    };
+    }
 
     if (watch) {
         bundler.on('update', logFiles);

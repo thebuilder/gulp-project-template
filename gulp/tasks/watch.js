@@ -1,6 +1,6 @@
 var gulp = require('gulp');
 
-gulp.task('watch', ["watchify"], function () {
+gulp.task('watch', function () {
     var watch = require('gulp-watch');
     var config = require('../config');
 

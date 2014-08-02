@@ -15,7 +15,7 @@ var gulp = require('gulp');
 require('./gulp');
 
 //Build and start watching for changes
-gulp.task('default', ['build', 'watch', 'test-watch', 'serve']);
+gulp.task('default', ['build', 'watch', 'watchify', 'test-watch', 'serve']);
 
 //All build tasks
 gulp.task('build', ['browserify', 'jade', 'less', 'bower', 'images', 'assets']);
