@@ -42,9 +42,6 @@ function compile(watch) {
     bundler.add("./" + config.js.src);
 
     if (config.isReleaseBuild) {
-        //Strip debug statements
-        bundler.transform("stripify");
-
         //Uglify when compiling for release
         bundler.transform({
             global: true,

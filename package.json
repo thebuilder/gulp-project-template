@@ -24,7 +24,6 @@
     "browserify-shim": "~3.6.0",
     "partialify": "~3.1.1",
     "browserify-plain-jade": "~0.2.0",
-    "stripify": "~1.2.0",
     "watchify": "~0.10.2",
     "uglifyify": "~2.5.0",
     "connect": "~2.14.5",

@@ -2,11 +2,11 @@ var notify = require("gulp-notify");
 var gutil = require('gulp-util');
 var config = require('../config');
 var isWindows = /^win/.test(require('os').platform());
-var isLinux = /^linux/.test(require('os').platform());
 
 module.exports = function() {
     var args = Array.prototype.slice.call(arguments) || {};
-    if (!isWindows && !isLinux) {
+
+    if (!isWindows) {
         // Send error to notification center with gulp-notify
         notify.onError({
             title: "Compile Error",
@@ -20,10 +20,6 @@ module.exports = function() {
     }
 
     if (typeof this.emit != "undefined") {
-        if (isLinux) {
-            //On CI, always emit an error.
-            this.emit("error", args);
-        }
         this.emit('end');
     } else if (config.isReleaseBuild) {
         throw new Error(args);
