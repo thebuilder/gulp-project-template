@@ -6,34 +6,30 @@ var handleErrors = require('../util/handleErrors');
 gulp.task('test', ['testify'], function(done) {
     var karma = require('karma').server;
 
-    //Set a timeout to ensure that the file is written.
-    setTimeout(function() {
-        karma.start({
-            configFile: path.resolve('karma.conf.js'),
-            singleRun: true
-        }, function (exitCode) {
-            if (exitCode != 0) {
-                //Stop the process
-                process.exit(exitCode);
-            } else {
-                done();
-            }
-        });
-    }, 2000);
+    karma.start({
+        configFile: path.resolve('karma.conf.js'),
+        singleRun: true
+    }, function (exitCode) {
+        if (exitCode != 0) {
+            //Stop the process
+            process.exit(exitCode);
+        } else {
+            done();
+        }
+    });
 });
 
 gulp.task('test-watch', ['testify-watch'], function(done) {
     var karma = require('karma').server;
-    setTimeout(function() {
-        karma.start({
-            configFile: path.resolve('karma.conf.js'),
-            singleRun: false,
-            autoWatch: true
-        }, function (exitCode) {
-            process.exit(exitCode);
-        });
-        done();
-    }, 500);
+
+    karma.start({
+        configFile: path.resolve('karma.conf.js'),
+        singleRun: false,
+        autoWatch: true
+    }, function (exitCode) {
+        process.exit(exitCode);
+    });
+    done();
 });
 
 // Run e2e tests using protractor.

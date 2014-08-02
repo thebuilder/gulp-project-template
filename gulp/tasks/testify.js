@@ -10,12 +10,12 @@ var config = require('../config');
 
 
 gulp.task('testify', ['build'], function () {
-    compileTestBundle(false);
+    return compileTestBundle(false);
 });
 
 gulp.task('testify-watch', ['build'], function () {
     fileChangeWatcher();
-    compileTestBundle(true);
+    return compileTestBundle(true);
 });
 
 var testBundler;
@@ -43,7 +43,7 @@ function compileTestBundle(watch) {
             })
             .pipe(source('test.bundle.js'))
             .pipe(gulp.dest(config.test.root))
-    };
+    }
 
     if (watch){
         testBundler.on('update', logFiles);

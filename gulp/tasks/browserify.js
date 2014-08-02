@@ -13,11 +13,11 @@ var config = require('../config');
  * Browserify should always depend on lint, to ensure JS is looking good.
  */
 gulp.task('browserify', function () {
-    compile(false);
+    return compile(false);
 });
 
 gulp.task('watchify', ['build'], function () {
-    compile(true);
+    return compile(true);
 });
 
 
