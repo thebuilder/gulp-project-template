@@ -11,8 +11,10 @@ gulp.task('test', ['testify'], function(done) {
         singleRun: true
     };
 
-    //Test more browsers in CI env.
-    if (process.env.CI) opts.browsers = ["Chrome", "Firefox", "PhantomJS"];
+    //Test more browsers in release build.
+    if (config.isReleaseBuild) {
+        opts.browsers = ["Chrome", "Firefox", "PhantomJS"];
+    }
 
     karma.start(opts, function (exitCode) {
         if (exitCode != 0) {
