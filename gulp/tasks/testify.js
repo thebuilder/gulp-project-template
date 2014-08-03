@@ -10,7 +10,7 @@ var config = require('../config');
 
 var testBundler;
 
-gulp.task('testify', function () {
+gulp.task('testify', ['build'], function () {
     return compileTestBundle(false);
 });
 
