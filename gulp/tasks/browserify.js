@@ -9,9 +9,6 @@ var extend = require("extend");
 var handleErrors = require('../util/handleErrors');
 var config = require('../config');
 
-/**
- * Browserify should always depend on lint, to ensure JS is looking good.
- */
 gulp.task('browserify', function () {
     return compile(false);
 });
@@ -29,7 +26,7 @@ function compile(watch) {
     var watchify = require('watchify');
     var browserify = require('browserify');
 
-    var opts = {debug:!config.isReleaseBuild};
+    var opts = {debug:!config.isReleaseBuild, extensions: [".js"]};
     var bundler;
     if (watch) {
         //bundler = watchify(browserify(extend(opts, watchify.args)));

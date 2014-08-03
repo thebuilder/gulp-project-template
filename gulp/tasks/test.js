@@ -29,11 +29,17 @@ gulp.task('test', ['testify'], function(done) {
 gulp.task('test-watch', ['testify-watch'], function(done) {
     var karma = require('karma').server;
 
-    karma.start({
+    var opts = {
         configFile: path.resolve('karma.conf.js'),
         singleRun: false,
         autoWatch: true
-    }, function (exitCode) {
+    };
+
+    if (config.test.coverage) {
+        opts.reporters.push("coverage");
+    }
+
+    karma.start(opts, function (exitCode) {
         process.exit(exitCode);
     });
     done();

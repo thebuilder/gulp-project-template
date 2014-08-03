@@ -8,8 +8,9 @@ var extend = require("extend");
 var handleErrors = require('../util/handleErrors');
 var config = require('../config');
 
+var testBundler;
 
-gulp.task('testify', ['build'], function () {
+gulp.task('testify', function () {
     return compileTestBundle(false);
 });
 
@@ -18,7 +19,7 @@ gulp.task('testify-watch', ['build'], function () {
     return compileTestBundle(true);
 });
 
-var testBundler;
+
 /**
  * Compile and browserify the test files into a bundle
  * @param watch
@@ -27,7 +28,7 @@ function compileTestBundle(watch) {
     var watchify = require('watchify');
     var browserify = require('browserify');
 
-    var opts = {debug:true};
+    var opts = {debug:true, extensions: [".js"]};
     if (watch) {
 //        testBundler = watchify(browserify(getTestFiles(), extend(opts, watchify.args)));
         testBundler = watchify(getTestFiles());
