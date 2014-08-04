@@ -1,28 +1,35 @@
 {
-    "name": "gulp-project",
-    "version": "0.2.0",
-    "authors": [
-        "Daniel Schmidt <tehbuilder@gmail.com>"
-    ],
-    "license": "MIT",
-    "ignore": [
-        "**/.*",
-        "node_modules",
-        "bower_components",
-        "test",
-        "tests"
-    ],
-    "overrides": {
-        "angular-mocks": {
-            "ignore": true
-        }
+  "name": "gulp-project",
+  "version": "0.2.0",
+  "authors": [
+    "Daniel Schmidt <tehbuilder@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "overrides": {
+    "angular-mocks": {
+      "ignore": true
     },
-    "dependencies": {
-        "gsap": "~1.13.1",
-        "normalize.css": "~3.0.1",
-        "angular": "~1.2.18"
+    "jquery": {
+      "ignore": true
     },
-    "devDependencies": {
-        "angular-mocks": "~1.2.21"
+    "jasmine-jquery": {
+      "ignore": true
     }
+  },
+  "dependencies": {
+    "gsap": "~1.13.1",
+    "normalize.css": "~3.0.1",
+    "angular": "~1.2.18"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.2.21",
+    "jasmine-jquery": "~2.0.5"
+  }
 }

@@ -22,10 +22,10 @@ gulp.task('bower', function () {
         gulp.src(bowerFiles())
             .pipe(plumber())
             .pipe(filter('**/*.js'))
-            .pipe(sourcemaps.init())
+            //.pipe(sourcemaps.init())
             .pipe(concat('vendor.min.js'))
             .pipe(uglify({mangle: false}))
-            .pipe(gulpif(!config.isReleaseBuild, sourcemaps.write()))
+            //.pipe(gulpif(!config.isReleaseBuild, sourcemaps.write()))
             .pipe(rename(function (path) {
                 path.dirname = "js";
                 gutil.log("Output: " + gutil.colors.yellow(path.dirname + "/" + path.basename + path.extname));

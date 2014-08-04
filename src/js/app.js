@@ -1,9 +1,9 @@
 var angular = require("angular");
 
 angular.module("gulpApp", [])
-    .factory("TimerService", require("./services/TimerService"))
+    .factory("GithubService", require("./services/GithubService"))
     .service("OtherService", require("./services/OtherService"))
 
-    .controller("TimerController", require("./controllers/TimerController"))
+    .controller("GithubController", require("./controllers/GithubController"))
 
     .directive("timerDirective", require("./directives/timer/timerDirective"));

@@ -13,7 +13,6 @@ gulp.task('test', ['testify', 'coverage'], function(done) {
     //Test more browsers in release build.
     if (config.isReleaseBuild) {
         opts.browsers = ["Chrome", "Firefox", "PhantomJS"];
-        opts.reporters = ["progress"]
     }
 
     karma.start(opts, function (exitCode) {
@@ -34,10 +33,6 @@ gulp.task('test-watch', ['testify-watch', 'coverage-watch'], function(done) {
         singleRun: false,
         autoWatch: true
     };
-
-    if (config.test.coverage) {
-        opts.reporters.push("coverage");
-    }
 
     karma.start(opts, function (exitCode) {
         process.exit(exitCode);

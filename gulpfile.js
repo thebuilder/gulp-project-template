@@ -30,6 +30,11 @@ gulp.task('release', function() {
 });
 
 //Create a release build, zip and upload it
-gulp.task('deploy', ['release', 'test'], function() {
+gulp.task('deploy', ['release', 'build'], function() {
+    gulp.start('deploy-upload');
+});
+
+//Before uploading to FTP run test and protractor.
+gulp.task('deploy-upload', ['test', 'protractor'], function() {
     gulp.start('ftp');
 });

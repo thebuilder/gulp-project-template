@@ -2,6 +2,11 @@ var mkdirp = require('mkdirp');
 var fs = require('fs');
 var path = require('path');
 
+/**
+ * Takes a screenshot of all failed tests, and saves to the supplied directory.
+ * @param dir_
+ * @constructor
+ */
 var ScreenshotReporter = function(dir_) {
     var dir = (dir_ ? dir_ : "./protractor/");
     dir = path.join(dir, new Date().toISOString());
