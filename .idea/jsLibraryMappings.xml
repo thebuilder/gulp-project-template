@@ -5,8 +5,8 @@
     <file url="file://$PROJECT_DIR$/gulpfile.js" libraries="{Node.js Globals, node_modules}" />
     <file url="file://$PROJECT_DIR$/karma.conf.js" libraries="{Node.js Globals}" />
     <file url="file://$PROJECT_DIR$/protractor.conf.js" libraries="{Node.js Globals, node_modules}" />
-    <file url="file://$PROJECT_DIR$/src" libraries="{Node.js Globals, angular-mocks.js, angular.js, angularjs-DefinitelyTyped, greensock-DefinitelyTyped, jasmine-DefinitelyTyped}" />
-    <file url="file://$PROJECT_DIR$/test" libraries="{Node.js Globals, angular-mocks.js, angular.js, angularjs-DefinitelyTyped, jasmine-DefinitelyTyped}" />
+    <file url="file://$PROJECT_DIR$/src" libraries="{Node.js Globals, angular-mocks.js, angularjs-DefinitelyTyped, greensock-DefinitelyTyped, jasmine-DefinitelyTyped}" />
+    <file url="file://$PROJECT_DIR$/test" libraries="{Node.js Globals, angular-mocks.js, angularjs-DefinitelyTyped, jasmine-DefinitelyTyped}" />
     <file url="file://$PROJECT_DIR$/test/scenarios" libraries="{angular-protractor-DefinitelyTyped, selenium-webdriver-DefinitelyTyped}" />
   </component>
 </project>
