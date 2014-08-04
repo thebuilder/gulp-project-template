@@ -1,9 +1,8 @@
 var gulp = require('gulp');
 var path = require('path');
 var config = require('../config');
-var handleErrors = require('../util/handleErrors');
 
-gulp.task('test', ['testify'], function(done) {
+gulp.task('test', ['testify', 'coverage'], function(done) {
     var karma = require('karma').server;
 
     var opts = {
@@ -14,6 +13,7 @@ gulp.task('test', ['testify'], function(done) {
     //Test more browsers in release build.
     if (config.isReleaseBuild) {
         opts.browsers = ["Chrome", "Firefox", "PhantomJS"];
+        opts.reporters = ["progress"]
     }
 
     karma.start(opts, function (exitCode) {
@@ -26,7 +26,7 @@ gulp.task('test', ['testify'], function(done) {
     });
 });
 
-gulp.task('test-watch', ['testify-watch'], function(done) {
+gulp.task('test-watch', ['testify-watch', 'coverage-watch'], function(done) {
     var karma = require('karma').server;
 
     var opts = {
@@ -44,18 +44,3 @@ gulp.task('test-watch', ['testify-watch'], function(done) {
     });
     done();
 });
-
-// Run e2e tests using protractor.
-// Make sure server task is running.
-gulp.task('protractor', ['serve', 'webdriver:update'], function() {
-    var protractor = require('gulp-protractor').protractor;
-
-    return gulp.src(config.test.e2e)
-        .pipe(protractor({
-            configFile: 'protractor.conf.js'
-        }))
-        .on('error', handleErrors);
-});
-
-// Update/install webdriver.
-gulp.task('webdriver:update', require('gulp-protractor').webdriver_update);

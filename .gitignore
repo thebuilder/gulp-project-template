@@ -1,6 +1,8 @@
 node_modules
 bower_components
 coverage
+protractor
+reports
 
 .DS_Store
 .sass-cache
@@ -10,4 +12,4 @@ coverage
 //Build directory
 dist
 
-test/test.bundle.js
+test/.generated

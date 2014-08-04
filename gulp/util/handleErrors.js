@@ -9,7 +9,7 @@ module.exports = function() {
     if (!isWindows) {
         // Send error to notification center with gulp-notify
         notify.onError({
-            title: "Compile Error",
+            title: "Error",
             message: "<%= error.message %>",
             sound: "Submarine",
             emitError: config.isReleaseBuild

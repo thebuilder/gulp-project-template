@@ -42,8 +42,8 @@ function compileTestBundle(watch) {
             .on('error', function (error) {
                 handleErrors(error); //Break the pipe by placing error handler outside
             })
-            .pipe(source('test.bundle.js'))
-            .pipe(gulp.dest(config.test.root))
+            .pipe(source(config.test.bundleFile))
+            .pipe(gulp.dest(config.test.generated))
     }
 
     if (watch){

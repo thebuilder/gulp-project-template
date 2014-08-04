@@ -4,8 +4,6 @@ gulp.task('open', ['serve'], function() {
     var open    = require("gulp-open");
     var config  = require('../config');
 
-    if (!config.server.openBrowser) return null;
-
 	var options = {
 		url: "http://localhost:" + config.server.port,
 		app: config.server.browser

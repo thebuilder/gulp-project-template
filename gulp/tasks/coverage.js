@@ -1,3 +1,6 @@
+/**
+ * Compiles 'app.js' using browserify-istanbul to generated code coverage.
+ **/
 var gulp = require('gulp');
 
 gulp.task('coverage', function () {
@@ -30,7 +33,7 @@ function compile(watch) {
 
     bundler.transform(istanbul({
         // ignore these glob paths (the ones shown are the defaults)
-        ignore: ['**/*.spec.js', '**/*.jade', '**/*.json']
+        ignore: ['**/*.spec.js', '**/*.scenario.js', '**/*.jade', '**/*.json']
     }));
 
     //Wrap the bundle method in a function, so it can be called by watchify
@@ -39,8 +42,8 @@ function compile(watch) {
             .on('error', function(error) {
                 handleErrors(error); //Break the pipe by placing error handler outside
             })
-            .pipe(source("app.coverage.js"))
-            .pipe(gulp.dest(config.test.root));
+            .pipe(source(config.test.coverageFile))
+            .pipe(gulp.dest(config.test.generated))
     }
 
     if (watch) {

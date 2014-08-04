@@ -7,8 +7,6 @@ module.exports = {
         port: '8080',
         log: true,
 
-        //Auto open browser on gulp run?
-        openBrowser: true,
         browser: 'google chrome canary'
     },
 
@@ -19,6 +17,9 @@ module.exports = {
 
     test: {
         root: 'test/',
+        generated: 'test/.generated/',
+        bundleFile: 'test.bundle.js',
+        coverageFile: 'app.coverage.js',
         spec: 'src/**/*.spec.js',
         e2e: ['src/**/*.scenario.js',
             'test/**/*.scenario.js']
