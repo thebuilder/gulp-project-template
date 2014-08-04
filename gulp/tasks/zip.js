@@ -1,6 +1,6 @@
 var gulp = require("gulp");
 
-gulp.task('zip', ["release", "test"], function () {
+gulp.task('zip', function () {
     var gutil = require('gulp-util');
     var zip = require("gulp-zip");
 

@@ -17,50 +17,66 @@ var gulp = require("gulp");
     }
  }]
  **/
-gulp.task('ftp', ["build"], function () {
+gulp.task('ftp', function () {
     var gutil = require('gulp-util');
     var ftp = require("gulp-ftp");
     var plumber = require("gulp-plumber");
-
-    //Read data
     var config = require("../config");
-    var ftpTargets = require('../.ftp.json');
-    var argv = require('minimist')(process.argv.slice(2));
-
-    if (!ftpTargets) {
-        gutil.log(gutil.colors.red("Error:"), "No '.ftp.json' file found. Make sure it is created.");
-        return null;
-    }
-    if (!ftpTargets.length) {
-        gutil.log(gutil.colors.red("Error:"), "'.ftp.json' file is empty. Make sure it contains at least one deploy target.");
-        return null;
-    }
-
     var options;
-    var target = argv.target;
-    if (ftpTargets.length == 1 || !target) {
-        //If only one target exists in the .json file use it.
-        if (ftpTargets[0].hasOwnProperty("ftp")) options = ftpTargets[0].ftp;
-        else options = ftpTargets[0];
+
+    if (process.env.FTP_HOST) {
+        gutil.log("Using ENV variables");
+        //Running on CI. Use ENV variables.
+        options = {
+            host: process.env.FTP_HOST,
+            port: process.env.FTP_PORT || 21,
+            user: process.env.FTP_USER,
+            pass: process.env.FTP_PASS,
+            remotePath: process.env.FTP_REMOTE_PATH || "/"
+        }
     } else {
-        //Find the build target with matching id
-        for (var i = 0; i < ftpTargets.length; i++) {
-            var obj = ftpTargets[i];
-            if (obj.id == target) {
-                gutil.log("Using deploy target:", gutil.colors.yellow(target));
-                options = obj.ftp;
-                break;
+        //Read data
+        var ftpTargets = require('../.ftp.json');
+        var argv = require('minimist')(process.argv.slice(2));
+
+        if (!ftpTargets) {
+            gutil.log(gutil.colors.red("Error:"), "No '.ftp.json' file found. Make sure it is created.");
+            return null;
+        }
+        if (!ftpTargets.length) {
+            gutil.log(gutil.colors.red("Error:"), "'.ftp.json' file is empty. Make sure it contains at least one deploy target.");
+            return null;
+        }
+
+        var target = argv.target;
+        if (ftpTargets.length == 1 || !target) {
+            //If only one target exists in the .json file use it.
+            if (ftpTargets[0].hasOwnProperty("ftp")) options = ftpTargets[0].ftp;
+            else options = ftpTargets[0];
+        } else {
+            //Find the build target with matching id
+            for (var i = 0; i < ftpTargets.length; i++) {
+                var obj = ftpTargets[i];
+                if (obj.id == target) {
+                    gutil.log("Using deploy target:", gutil.colors.yellow(target));
+                    options = obj.ftp;
+                    break;
+                }
             }
         }
     }
 
-    if (options) {
+    if (options && !!options.host) {
         gutil.log("Deploying to", gutil.colors.yellow(options.host));
         return gulp.src(config.dist + "**/*.*")
             .pipe(plumber())
             .pipe(ftp(options));
     } else {
-        gutil.log(gutil.colors.red("Error:"), "Failed to read FTP details from '.ftp.json' file. " + (target ? " Target not found: " + target : ""));
+        if (process.env.FTP_HOST) {
+            gutil.log(gutil.colors.red("Error:"), "Failed to read FTP details from ENV.");
+        } else {
+            gutil.log(gutil.colors.red("Error:"), "Failed to read FTP details from '.ftp.json' file. " + (target ? " Target not found: " + target : ""));
+        }
         return null;
     }
 });

@@ -30,4 +30,6 @@ gulp.task('release', function() {
 });
 
 //Create a release build, zip and upload it
-gulp.task('deploy', ['release', 'test', 'zip', 'ftp']);
+gulp.task('deploy', ['release', 'test'], function() {
+    gulp.start('ftp');
+});
