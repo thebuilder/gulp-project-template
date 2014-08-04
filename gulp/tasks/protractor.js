@@ -15,9 +15,13 @@ gulp.task('protractor', ['webdriver:update'], function() {
         .pipe(protractor({
             configFile: 'protractor.conf.js'
         }))
-        .on('error', handleErrors)
+        .on('error', onError)
         .on('end', stopServer);
 });
+
+function onError() {
+    stopServer();
+}
 
 function startServer(){
     var connect = require('connect');
