@@ -1,5 +1,5 @@
 var config = require('./gulp/config');
-var ScreenshotReporter = require('./test/reporters/ScreenshotReporter.js');
+var ScreenshotReporter = require('./test/utils/ScreenshotReporter.js');
 
 exports.config = {
     jasmineNodeOpts: {
