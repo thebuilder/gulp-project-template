@@ -29,10 +29,31 @@ Install the bower components.
 
 	bower install
 
-To start developing run **gulp**. This will compile files, and watch for changes. Any file changes will cause LiveReload to trigger an update of the html page.
+To start developing run **gulp**. This will compile files, start a webserver and watch for changes. Any file changes will cause LiveReload to trigger an update of the html page.
 
     gulp
-    
+
+
+##Webstorm setup
+If you are using Webstorm, you should make sure that it is configured for the project. This includes setting up JS libraries, scope and directories.
+
+
+###Libraries
+To get proper code completion...
+
+Most of the Third Party libraries have Typescript interface that can be used.
+To get these, you should choose **Download**, and change the dropdown to "Typescript Community Stubs". Find the relevant lib, and add it.
+
+You will want the following:
+
+* **angularjs**
+* **greensock**
+
+For testing these frameworks are used:
+
+* **angular-protractor**
+* **jasmine**
+* **selenium-webdriver**
 
 ##Gulp
 The main **gulpfile.js** is kept very small, and only contains the very minimum require code and the alias tasks.
@@ -163,7 +184,7 @@ Jasmine is the framework used to write the tests. It is explained and demonstrat
 
 A simple test could look like: 
 
-```
+```javascript
 describe("A suite", function() {
   it("contains spec with an expectation", function() {
     expect(true).toBe(true);
