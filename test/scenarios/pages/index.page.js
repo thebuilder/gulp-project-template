@@ -1,5 +1,5 @@
 var IndexPage = function() {
-    this.title = "Gulp Project";
+    this.title = "Gulp Poject";
 
     this.get = function() {
         browser.get('/');
