@@ -10,11 +10,11 @@ var config = require('../config');
 
 var testBundler;
 
-gulp.task('testify', ['build'], function () {
+gulp.task('testify',function () {
     return compileTestBundle(false);
 });
 
-gulp.task('testify-watch', ['build'], function () {
+gulp.task('testify-watch', function () {
     fileChangeWatcher();
     return compileTestBundle(true);
 });

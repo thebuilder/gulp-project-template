@@ -16,6 +16,10 @@ var gulp = require("gulp");
         "remotePath": ""
     }
  }]
+ *
+ * Another option is to use the systems ENV variables. This should be used when doing continuous deployment.
+ * The following variables can be used:
+ * FTP_HOST, FTP_PORT, FTP_USER, FTP_PASS, FTP_REMOTE_PATH
  **/
 gulp.task('ftp', function () {
     var gutil = require('gulp-util');
@@ -24,15 +28,15 @@ gulp.task('ftp', function () {
     var config = require("../config");
     var options;
 
-    if (process.env.FTP_HOST) {
+    if (process.env["FTP_HOST"]) {
         gutil.log("Using ENV variables");
         //Running on CI. Use ENV variables.
         options = {
-            host: process.env.FTP_HOST,
-            port: process.env.FTP_PORT || 21,
-            user: process.env.FTP_USER,
-            pass: process.env.FTP_PASS,
-            remotePath: process.env.FTP_REMOTE_PATH || "/"
+            host: process.env["FTP_HOST"],
+            port: process.env["FTP_PORT"] || 21,
+            user: process.env["FTP_USER"],
+            pass: process.env["FTP_PASS"],
+            remotePath: process.env["FTP_REMOTE_PATH"] || "/"
         }
     } else {
         //Read data
