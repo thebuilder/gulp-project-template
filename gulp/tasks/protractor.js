@@ -2,7 +2,6 @@ var gulp = require('gulp');
 var gutil = require('gulp-util');
 
 var config = require('../config');
-var handleErrors = require('../util/handleErrors');
 
 var server;
 

@@ -6,8 +6,13 @@ reports
 
 .DS_Store
 .sass-cache
-.idea
 .ftp.json
+
+//Webstorm project files to include. JS libraries should be shared.
+.idea/*
+!.idea/jsLibraryMappings.xml
+!.idea/webResources.xml
+!.idea/libraries
 
 //Build directory
 dist
