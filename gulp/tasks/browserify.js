@@ -39,6 +39,10 @@ function compile(watch) {
     bundler.add("./" + config.js.src);
 
     if (config.isReleaseBuild) {
+        bundler.transform({
+            exts: [".js"]
+        }, 'browserify-ngannotate');
+
         //Uglify when compiling for release
         bundler.transform({
             global: true,
@@ -46,10 +50,6 @@ function compile(watch) {
             exts: [".js"], //Only uglify .js files. Would break if .html or .json are required.
             ignore: []
         }, 'uglifyify');
-
-        bundler.transform({
-            exts: [".js"]
-        }, 'browserify-ngannotate');
     }
 
     //Wrap the bundle method in a function, so it can be called by watchify

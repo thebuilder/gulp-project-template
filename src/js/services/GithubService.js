@@ -9,9 +9,46 @@
 function GithubService($http) {
     var GithubService = {};
 
-    GithubService.getLastCommit = function() {
-        var url = "https://api.github.com/repos/thebuilder/gulp-project-template/git/refs/heads/master";
-        return $http.get(url);
+    /**
+     * @param user {string}
+     * @param repo {string}
+     * @return {ng.IHttpPromise<any>|*}
+     */
+    GithubService.getLastCommit = function(user, repo) {
+        var url = "https://api.github.com/repos/"+user+"/"+repo+"/git/refs/heads/master";
+        return $http.get(url).then(function(response) {
+            return response.data;
+        });
+    };
+
+    /**
+     * @param user {string}
+     * @param repo {string}
+     * @return {ng.IHttpPromise<any>|*}
+     */
+    GithubService.getLastCommitDetails = function(user, repo) {
+        //First get the last commit
+        return GithubService.getLastCommit(user, repo).then(function(data) {
+            //Dig deeper.
+            return $http.get(data.object.url).then(function(response) {
+                return response.data;
+            });
+        });
+    };
+
+    /**
+     * @param user {string}
+     * @param repo {string}
+     * @return {ng.IHttpPromise<any>|*}
+     */
+    GithubService.getLastCommitTree = function(user, repo) {
+        //First get the last commit
+        return GithubService.getLastCommitDetails(user, repo).then(function(data) {
+            //Dig deeper.
+            return $http.get(data.tree.url).then(function(response) {
+                return response.data;
+            });
+        });
     };
 
     return GithubService;

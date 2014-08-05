@@ -1,6 +1,7 @@
 gulp-project-template
 =====================
-A template combining Gulp, Browserify and Jade, for a sweet starting point for new projects.
+A template combining Gulp, Browserify, LiveReload and Jade, for a sweet starting point for new Angular projects.
+
 
 ##Getting started
 The following tools are required when developing the project locally:
@@ -38,13 +39,40 @@ To start developing run **gulp**. This will compile files, start a webserver and
 If you are using Webstorm, you should make sure that it is configured for the project. This includes setting up JS libraries, scope and directories.
 
 
-###Libraries
-To get proper code completion...
+###Directories
+You should mark the following directories inside Webstorm:
 
-Most of the Third Party libraries have Typescript interface that can be used.
-To get these, you should choose **Download**, and change the dropdown to "Typescript Community Stubs". Find the relevant lib, and add it.
+#####Excluded 
+* **node_modules**
+* **test/reports/coverage/{BROWSER}/js** _Exclude the coverage JS directory. Otherwise you will get duplicate .html files (detailing coverage) everything you are looking up a .js file._
 
-You will want the following:
+#####Resource Root 
+* **src** _Ensures correct relative paths in source files._
+* **src/less** _You will need this to get correct relative image paths in .css_
+
+#####Tests 
+* **test**
+
+
+###JS Libraries
+	
+	Preferences > Javascript > Libraries
+
+To get proper code completion, you need to spend 10 minutes configuring the libraries you are using.
+
+
+####Project libraries
+You can mark files and directories in the project as libraries. This allows you to assign a scope for where they should be used, and helps with Webstorm code completion.
+
+* **bower_components**
+* **node_modules**
+
+You can mark specific files/directories inside **bower_components** as a library, to give you better control over what is exposed. However you should generally prefer the "Typescript Community Stubs" if the library exists there.
+
+####Typescript Community Stubs
+Most of the Third Party libraries have Typescript interfaces that can be used. These interfaces knows exactly how the code is structured, what methods expect and what they return.
+
+To get these, you should choose **Download**, and change the dropdown to "Typescript Community Stubs". Find the relevant lib, and add it. You will want the following:
 
 * **angularjs**
 * **greensock**
@@ -55,110 +83,20 @@ For testing these frameworks are used:
 * **jasmine**
 * **selenium-webdriver**
 
-##Gulp
-The main **gulpfile.js** is kept very small, and only contains the very minimum require code and the alias tasks.
-Everything else related to gulp is placed inside the **gulp/** directory.
+###Scope
+Once you have prepared the libraries the project needs, you should configure the Scope. This specifies what JS should be available to which source files. For example, you do not want access to **node_modules** in your src files, since you would get a ton of irrelevant code completion hints.
 
-* **tasks**
-    * All the gulp tasks are placed in here.
-* **util**
-    * Utility methods.
-* **.ftp.json**
-    * FTP Servers used in the project. See [FTP task](#ftp) for details.
-* **config.js**
-    * Contains path variables and other configuration vars, that are shared by tasks. You can change these to suit your project.
-* **index.js**
-    * The file responsible for requiring all the tasks. You should not need to edit this.
+The following is a suggestion for the libraries mentioned above. If you add more libraries, make sure to consider how it should be scoped.
 
-###Alias Tasks
-The following tasks are placed in **gulpfile.js**, and executes a group of tasks to compile the project.
+###Mark as plain text
+A final *"trick"* is to mark compiled files as plain text. This stops Webstorm from indexing the js/css, so you won't see references to compiled files in code completion.
 
-####default
-Start developing by calling build, watch, serve and open.
+You should exclude the following:
 
-####build
-Compiles the project
+* **dist/js/*.js**
+* * **dist/css/*.css**
+* * **test/bundle/*.js**
 
-####release
-Compile the project for release, minifying JS, etc.
-
-####deploy
-Compile a release build, zip it and upload to FTP.
-
-
-###Tasks
-Tasks placed in **gulp/tasks/** will be added to gulp, so you can run them. Feel free to delete unneeded tasks or add more. Just make sure to update the task groups to reflect any missing tasks.
-
-####assets
-Copy over assets to the build directory.
-
-####bower
-Concat bower components into .js and .css files.
-
-####browserify
-Compile JS using [browserify](http://browserify.org/).
-
-####[ftp](id:ftp)
-Upload the build directory to an ftp server.
-You will need to manually create and fill out the blanks in **gulp/.ftp.json**.
-
-This file contains a list of FTP server credentials in the following .json structure:
-
-```
-[{
-    "id": "demo",
-    "ftp": {
-        "host": "",
-        "port": 21,
-        "user": "",
-        "pass": "",
-        "remotePath": ""
-    }
-}]
-```
-
-To push to a specific server you should run the ftp task with a target, like:
-
-    gulp ftp --target demo
-
-If no target is specified, or if there is only one target in the file, it will be used.
-
-####images
-Copy and minify images. Supports .png, .jpg, .gif and .svg.
-
-####jade
-Compile the main jade file.
-
-####less
-Compile the main less file, and attach source maps. In release mode the .less files are run through AutoPrefix to add vendor tags, and it gets minified.
-
-####lint
-Run the .js files through JSHint, using the settings in **.jshintrc**. Change these to suit the project.
-
-####test
-Tasks that start a Karma server up using the **karma.conf.js** configuration. Will also compile the code using browserify. It exposes the following tasks.
-
-
-Single run test:
-
-	gulp test
-	
-To keep watching for changes:
-	
-	gulp test-watch
-
-####open
-Opens the browser and navigate to the local server.
-
-####serve
-Create a local server. Default path is [http://localhost:8080]([http://localhost:8080]), but this can be configured in the **config.js** file
-
-####watch
-Watch for changes, and run respective tasks.
-
-####zip
-Make a .zip file containing the build content. It will be placed in the **releases/** directory, name with information from the **package.json** file:
-**[name]_[version].zip**
 
 ##Karma+Jasmine Testing
 The project is configured to use Karma and Jasmine for testing.
@@ -190,4 +128,22 @@ describe("A suite", function() {
     expect(true).toBe(true);
   });
 });
+```
+
+##Protractor
+Protractor is an E2E testing framework built for AngularJS.
+
+##Continues Integration
+If setting up a CI server, like [codeship.io](http://codeship.io), use the following commands in a Node 0.10.x env:
+
+
+```
+# Install the modules
+npm install --silent
+npm install bower gulp -g --silent
+bower install -f --silent
+
+# Test commands
+gulp release test
+gulp protractor
 ```

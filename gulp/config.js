@@ -17,7 +17,7 @@ module.exports = {
 
     test: {
         root: 'test/',
-        generated: 'test/.generated/',
+        bundleDir: 'test/bundle/',
         bundleFile: 'test.bundle.js',
         coverageFile: 'app.coverage.js',
         spec: 'src/**/*.spec.js',

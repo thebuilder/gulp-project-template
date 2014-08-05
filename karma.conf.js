@@ -16,8 +16,8 @@ module.exports = function (config) {
             'bower_components/angular-mocks/angular-mocks.js',
             'test/test.globals.js',
 
-            'test/.generated/test.bundle.js',
-            'test/.generated/app.coverage.js' //Use the special app.coverage.js to get code coverage.
+            'test/bundle/test.bundle.js',
+            'test/bundle/app.coverage.js' //Use the special app.coverage.js to get code coverage.
         ],
 
         // test results reporter to use
@@ -54,9 +54,14 @@ module.exports = function (config) {
         // if true, it capture browsers, run tests and exit
         singleRun: false,
 
+        preprocessors: {
+            'dist/js/app.js': ['sourcemap'],
+            'test/bundle/*.js': ['sourcemap']
+        },
+
         coverageReporter: {
             type : 'html',
-            dir : 'reports/coverage/'
+            dir : 'test/reports/coverage/'
         }
     });
 };

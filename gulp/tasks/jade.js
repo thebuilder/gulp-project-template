@@ -27,7 +27,7 @@ gulp.task('jade', function() {
         .pipe(gulp.dest(config.dist));
 });
 
-function getData(file, cb) {
+function getData(file) {
     //Read .json data from the jadeData directory, and make it accessible to Jade.
-    cb(readJson(config.jade.data))
+    return readJson(config.jade.data)
 }

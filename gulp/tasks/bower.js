@@ -6,8 +6,6 @@ gulp.task('bower', function () {
     var filter      = require('gulp-filter');
     var concat      = require('gulp-concat');
     var uglify      = require('gulp-uglify');
-    var gutil       = require('gulp-util');
-    var rename      = require('gulp-rename');
     var sourcemaps  = require('gulp-sourcemaps');
     var minifyCSS   = require('gulp-minify-css');
     var bowerFiles  = require('main-bower-files');
@@ -26,10 +24,7 @@ gulp.task('bower', function () {
             .pipe(concat('vendor.min.js'))
             .pipe(uglify({mangle: false}))
             //.pipe(gulpif(!config.isReleaseBuild, sourcemaps.write()))
-            .pipe(rename(function (path) {
-                path.dirname = "js";
-                gutil.log("Output: " + gutil.colors.yellow(path.dirname + "/" + path.basename + path.extname));
-            }))
+            .pipe(gulp.dest(config.dist + config.js.dir ))
     );
 
     //Concat all the Bower CSS libs
@@ -41,14 +36,8 @@ gulp.task('bower', function () {
             .pipe(concat('vendor.min.css'))
             .pipe(gulpif(config.isReleaseBuild, minifyCSS({keepBreaks: true})))
             .pipe(gulpif(!config.isReleaseBuild, sourcemaps.write()))
-            .pipe(rename(function (path) {
-                path.dirname = "css";
-                gutil.log("Output: " + gutil.colors.yellow(path.dirname + "/" + path.basename + path.extname));
-            }))
+            .pipe(gulp.dest(config.dist + config.less.dir))
     );
 
-    //Output the vendor files to the dist directory.
-    return es.merge.apply(this, streams)
-        .pipe(plumber())
-        .pipe(gulp.dest(config.dist))
+    return es.merge.apply(this, streams);
 });

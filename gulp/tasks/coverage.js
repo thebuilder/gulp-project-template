@@ -43,7 +43,7 @@ function compile(watch) {
                 handleErrors(error); //Break the pipe by placing error handler outside
             })
             .pipe(source(config.test.coverageFile))
-            .pipe(gulp.dest(config.test.generated))
+            .pipe(gulp.dest(config.test.bundleDir))
     }
 
     if (watch) {

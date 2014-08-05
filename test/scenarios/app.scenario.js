@@ -1,6 +1,6 @@
 var IndexPage = require("./pages/index.page");
 
-describe('app', function () {
+describe('App home', function () {
     var page = new IndexPage();
 
     beforeEach(function() {

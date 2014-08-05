@@ -14,7 +14,6 @@ function timerDirective($interval, dateFilter) {
 
             function updateTime() {
                 $element.text(dateFilter(new Date(), "d/M/yy H:mm:ss"));
-                $element.hide();
             }
 
             $element.on('$destroy', function() {

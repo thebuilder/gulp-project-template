@@ -12,17 +12,6 @@
     "test",
     "tests"
   ],
-  "overrides": {
-    "angular-mocks": {
-      "ignore": true
-    },
-    "jquery": {
-      "ignore": true
-    },
-    "jasmine-jquery": {
-      "ignore": true
-    }
-  },
   "dependencies": {
     "gsap": "~1.13.1",
     "normalize.css": "~3.0.1",

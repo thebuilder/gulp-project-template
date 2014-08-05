@@ -21,6 +21,6 @@ exports.config = {
     rootElement: 'body',
 
     onPrepare: function() {
-        jasmine.getEnv().addReporter(new ScreenshotReporter("./reports/protractor/"));
+        jasmine.getEnv().addReporter(new ScreenshotReporter("./test/reports/protractor/"));
     }
 };
