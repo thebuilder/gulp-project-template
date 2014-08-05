@@ -1,6 +1,13 @@
 describe("Directives", function() {
    describe("Timer", function() {
-       var element, $interval;
+       /**
+        * The element created by the directive. It exposes JQLite and Angular augmented methods.
+        * @type {JQuery|ng.IAugmentedJQuery}
+        */
+       var element;
+       /** @type {ng.ITimeoutService} */
+       var $interval;
+
        beforeEach(angular.mock.module(testGlobals.ngAppName));
 
        beforeEach(inject(function ($injector) {
@@ -15,7 +22,7 @@ describe("Directives", function() {
 
        it("Should compile and update time", function () {
            expect(element).toBeDefined();
-           expect(element).toHaveClass("timer");
+           expect(element.hasClass("timer")).toBeTruthy();
            $interval.flush(1000);
        });
 

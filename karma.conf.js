@@ -9,9 +9,6 @@ module.exports = function (config) {
 
         // list of files / patterns to load in the browser
         files: [
-            'bower_components/jquery/dist/jquery.min.js',
-            'bower_components/jasmine-jquery/lib/jasmine-jquery.js',
-
             'dist/js/vendor.min.js',
             'bower_components/angular-mocks/angular-mocks.js',
             'test/test.globals.js',

@@ -3,6 +3,7 @@
  * Creating and returning a bound Object keeps controller bindings up to date and avoids pitfalls of binding primitive values.
  * Important: A "factory" is in fact a pattern/implementation, and shouldn't be part of the provider's name. All factories and services should be called "services".
  * @name GithubService
+ * @param $http {ng.IHttpService} The HTTP service used to make calls.
  * @constructor
  * @ngInject
  */

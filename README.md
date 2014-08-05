@@ -94,8 +94,8 @@ A final *"trick"* is to mark compiled files as plain text. This stops Webstorm f
 You should exclude the following:
 
 * **dist/js/*.js**
-* * **dist/css/*.css**
-* * **test/bundle/*.js**
+* **dist/css/*.css**
+* **test/bundle/*.js**
 
 
 ##Karma+Jasmine Testing

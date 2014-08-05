@@ -1,7 +1,12 @@
 describe("Controllers", function() {
     describe("GithubController", function () {
+        /**
+         * @type {ng.IScope}
+         */
         var scope;
-        /** @type {GithubController} */
+        /**
+         * @type {GithubController}
+         */
         var ctrl;
         var GithubService;
 

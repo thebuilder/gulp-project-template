@@ -1,3 +1,7 @@
+/**
+ * Require Angular. Type declared with Definitely Typed.
+ * @type {ng.IAngularStatic|exports}
+ */
 var angular = require("angular");
 
 angular.module("gulpApp", [])

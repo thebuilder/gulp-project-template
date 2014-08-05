@@ -9,6 +9,12 @@ function timerDirective($interval, dateFilter) {
         restrict: 'EA',
         template: require('./timerDirective.jade'),
         replace: true,
+
+        /**
+         * @param $scope {ng.IScope}
+         * @param $element {JQuery|ng.IAugmentedJQuery}
+         * @param $attrs {Object}
+         */
         link: function ($scope, $element, $attrs) {
             var timeoutId;
 
@@ -19,7 +25,7 @@ function timerDirective($interval, dateFilter) {
             $element.on('$destroy', function() {
                 $interval.cancel(timeoutId);
             });
-
+            
             // start the UI update process; save the timeoutId for canceling
             timeoutId = $interval(function() {
                 updateTime(); // update DOM
