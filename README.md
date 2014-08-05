@@ -19,8 +19,7 @@ The following tools are required when developing the project locally:
 
 		npm install -g bower
 		
-* [LiveReload](http://feedback.livereload.com/knowledgebase/articles/86242-how-do-i-install-and-use-the-browser-extensions)  
-  Instantly see changes in HTML, JS, CSS etc.
+* ~~[LiveReload](http://feedback.livereload.com/knowledgebase/articles/86242-how-do-i-install-and-use-the-browser-extensions)~~   LiveReload gets injected into the HTML when compiling development builds. This enables LiveReload in all browsers and   devices, not just Chrome.
 
 Install the project node modules.   
 		
