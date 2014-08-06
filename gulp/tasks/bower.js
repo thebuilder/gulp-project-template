@@ -20,10 +20,10 @@ gulp.task('bower', function () {
         gulp.src(bowerFiles())
             .pipe(plumber())
             .pipe(filter('**/*.js'))
-            //.pipe(sourcemaps.init())
+            .pipe(sourcemaps.init())
             .pipe(concat('vendor.min.js'))
             .pipe(uglify({mangle: false}))
-            //.pipe(gulpif(!config.isReleaseBuild, sourcemaps.write()))
+            .pipe(gulpif(!config.isReleaseBuild, sourcemaps.write('./', {sourceRoot:"../source/bower"})))
             .pipe(gulp.dest(config.dist + config.js.dir ))
     );
 
@@ -35,7 +35,7 @@ gulp.task('bower', function () {
             .pipe(sourcemaps.init())
             .pipe(concat('vendor.min.css'))
             .pipe(gulpif(config.isReleaseBuild, minifyCSS({keepBreaks: true})))
-            .pipe(gulpif(!config.isReleaseBuild, sourcemaps.write()))
+            .pipe(gulpif(!config.isReleaseBuild, sourcemaps.write({sourceRoot:"../source/bower"})))
             .pipe(gulp.dest(config.dist + config.less.dir))
     );
 

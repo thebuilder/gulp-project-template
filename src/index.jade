@@ -6,3 +6,13 @@ block content
   h1=data.header
   p=data.body
   timer-directive
+
+  .github(ng-controller="GithubController as github" ng-init="github.getCommitTree()")
+    .commit(ng-repeat="commit in github.data.tree")
+      h3 {{commit.sha}}
+      dl
+        dt Path
+        dd {{commit.path}}
+        dt Size
+        dd {{commit.size}}
+      a(ng-href="{{commit.url}}") {{commit.url}}

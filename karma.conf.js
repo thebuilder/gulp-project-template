@@ -52,13 +52,16 @@ module.exports = function (config) {
         singleRun: false,
 
         preprocessors: {
-            'dist/js/app.js': ['sourcemap'],
             'test/bundle/*.js': ['sourcemap']
         },
 
         coverageReporter: {
             type : 'html',
-            dir : 'test/reports/coverage/'
+            dir : 'test/reports/coverage/',
+            subdir: function(browser) {
+                // normalization process to keep a consistent browser name across different OS
+                return browser.toLowerCase().split(/[ /-]/)[0];
+            }
         }
     });
 };

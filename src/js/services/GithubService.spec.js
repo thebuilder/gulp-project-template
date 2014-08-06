@@ -29,7 +29,6 @@ describe("Service", function() {
             //Setup URL endpoints
             httpBackend.whenGET(gitCommitUrl).respond(gitCommitData);
             httpBackend.whenGET(gitCommitData.object.url).respond(gitCommitDetails);
-            httpBackend.whenGET(gitCommitDetails.tree.url).respond({tree:{}});
         }));
 
         afterEach(function() {
@@ -48,14 +47,6 @@ describe("Service", function() {
             httpBackend.expectGET(gitCommitUrl);
             httpBackend.expectGET(gitCommitData.object.url);
             service.getLastCommitDetails("thebuilder", "gulp-project-template");
-            httpBackend.flush();
-        });
-
-        it("Should get last commit tree from Github", function () {
-            httpBackend.expectGET(gitCommitUrl);
-            httpBackend.expectGET(gitCommitData.object.url);
-            httpBackend.expectGET(gitCommitDetails.tree.url);
-            service.getLastCommitTree("thebuilder", "gulp-project-template");
             httpBackend.flush();
         });
     });

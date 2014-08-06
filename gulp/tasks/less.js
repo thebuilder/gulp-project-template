@@ -16,7 +16,7 @@ gulp.task('less', function () {
         .pipe(plumber({errorHandler:handleErrors}))
         .pipe(sourcemaps.init())
         .pipe(less())
-        .pipe(gulpif(!config.isReleaseBuild, sourcemaps.write()))
+        .pipe(gulpif(!config.isReleaseBuild, sourcemaps.write({sourceRoot:"../source/less"})))
         //Auto add vendor prefixes. See https://www.npmjs.org/package/gulp-autoprefixer for details on defining browser support
         .pipe(gulpif(config.isReleaseBuild, autoprefixer())) //Autoprefixer does not work with gulp-sourcemaps yet, so skip it untill release build.
         .pipe(gulpif(config.isReleaseBuild, minifyCSS({keepBreaks:true})))

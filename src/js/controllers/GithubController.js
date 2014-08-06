@@ -8,16 +8,22 @@
  */
 function GithubController(GithubService) {
     var scope = this;
-    scope.message = "Controller says hello";
-    scope.lastCommit = null;
+    scope.data = null;
 
-    this.getCommit = function() {
-        scope.lastCommit = GithubService.getLastCommit();
+    /**
+     * Fetch data when calling init
+     */
+    scope.init = function() {
+        GithubService.getLastCommit("thebuilder", "gulp-project-template").then(onDataReady);
+    };
+
+    function onDataReady(data) {
+        scope.data = data;
     }
 }
 
 GithubController.prototype.prototypeMethod = function() {
-  return "I'm a prototype!";
+  return "Create prototypes to extend controller methods";
 };
 
 module.exports = GithubController;

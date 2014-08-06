@@ -6,7 +6,8 @@ var angular = require("angular");
 
 angular.module("gulpApp", [])
     .factory("GithubService", require("./services/GithubService"))
-    .service("OtherService", require("./services/OtherService"))
+
+    .filter("checkmark", require("./filters/checkmarkFilter"))
 
     .controller("GithubController", require("./controllers/GithubController"))
 

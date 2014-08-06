@@ -1,10 +1,6 @@
 var gulp = require('gulp');
-var gulpif = require('gulp-if');
 var gutil = require('gulp-util');
-var mold = require('mold-source-map');
-var source = require('vinyl-source-stream');
 var path = require("path");
-var extend = require("extend");
 
 var handleErrors = require('../util/handleErrors');
 var config = require('../config');
@@ -25,6 +21,11 @@ gulp.task('watchify', ['build'], function () {
 function compile(watch) {
     var watchify = require('watchify');
     var browserify = require('browserify');
+    var mold = require('mold-source-map');
+    var source = require('vinyl-source-stream');
+    var extend = require("extend");
+    var stripDebug = require('gulp-strip-debug');
+    var streamify = require('gulp-streamify');
 
     var opts = {debug:!config.isReleaseBuild, extensions: [".js"]};
     var bundler;
@@ -40,7 +41,7 @@ function compile(watch) {
 
     if (config.isReleaseBuild) {
         bundler.transform({
-            exts: [".js"]
+            exts: ['.js']
         }, 'browserify-ngannotate');
 
         //Uglify when compiling for release
@@ -58,8 +59,9 @@ function compile(watch) {
             .on('error', function(error) {
                 handleErrors(error); //Break the pipe by placing error handler outside
             })
-            .pipe(gulpif(!config.isReleaseBuild, mold.transformSourcesRelativeTo(config.src)))
+            .pipe(!config.isReleaseBuild ? mold.transformSources(mapSources) : gutil.noop())
             .pipe(source(config.js.name))
+            .pipe(config.isReleaseBuild ? streamify(stripDebug()) : gutil.noop())
             .pipe(gulp.dest(config.dist + config.js.dir));
     }
 
@@ -71,6 +73,19 @@ function compile(watch) {
 }
 
 
+/**
+ * Transform the paths in the sourcemap, so they become relative, and point to the virtual "source" directory.
+ * @param file {string}
+ * @return {string}
+ */
+function mapSources(file) {
+    if (!file) return "";
+    if (file.indexOf("node_modules") > -1) {
+        return "../source/" + path.relative(path.resolve("."), file);
+    } else {
+        return "../source/" + config.js.dir + "/" + path.relative(path.resolve(config.src + config.js.dir), file);
+    }
+}
 
 /**
  * Console log all files in the array.
