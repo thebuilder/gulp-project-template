@@ -1,15 +1,11 @@
 node_modules
 bower_components
+.idea/
 
 .DS_Store
 .sass-cache
 .ftp.json
 
-//Webstorm project files to include. JS libraries should be shared.
-.idea/*
-!.idea/jsLibraryMappings.xml
-!.idea/webResources.xml
-!.idea/libraries
 
 //Build directory
 dist

@@ -38,8 +38,6 @@ function GithubService($http) {
         });
     };
 
-    console.log("Lol");
-
     return GithubService;
 }
 
