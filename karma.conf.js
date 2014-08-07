@@ -52,7 +52,8 @@ module.exports = function (config) {
         singleRun: false,
 
         preprocessors: {
-            'test/bundle/*.js': ['sourcemap']
+            'test/bundle/*.js': ['sourcemap'],
+            'src/js/app.js': ['coverage'] //Makes Webstorm support coverage runs.
         },
 
         coverageReporter: {
