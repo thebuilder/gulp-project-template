@@ -1,7 +1,7 @@
 /**
- * @module basicModule
  * This module creates a static module with public properties.
  * var module = require("./basicModule")
+ * @module basicModule
  */
 module.exports = {
     /**

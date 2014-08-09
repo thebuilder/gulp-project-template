@@ -9,7 +9,6 @@ mixin social(title, description, twitter, facebook)
     //- Page description
     meta(name="description" content=description)
 
-  //- Twitter social tags
   if twitter
     //- Twitter Card data, short summary
     if twitter.card
@@ -17,6 +16,7 @@ mixin social(title, description, twitter, facebook)
     //- site or publisher - @publisher_handle
     if twitter.site
       meta(name="twitter:site" content=twitter.site)
+      
     //- Page title
     if twitter.title || title
     meta(name="twitter:title" content=(twitter.title ? twitter.title : title))
