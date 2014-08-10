@@ -1,4 +1,4 @@
-gulp-project-template
+gulp-project-template [![Codeship Status for thebuilder/gulp-project-template](https://codeship.io/projects/58d76280-fded-0131-f546-4ebc8a94177b/status?branch=master)](https://codeship.io/projects/29482)
 =====================
 A template combining Gulp, Browserify, LiveReload and Jade, for a sweet starting point for new Angular projects.
 
