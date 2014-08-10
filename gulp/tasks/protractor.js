@@ -25,13 +25,13 @@ function onError() {
 function startServer(){
     var connect = require('connect');
     var http    = require('http');
+    var serveStatic = require('serve-static');
     var handleErrors = require('../util/handleErrors');
     var config  = require('../config');
 
     gutil.log("Start web server");
     var app = connect();
-    //app.use(connect.logger('dev'));
-    app.use(connect.static(config.server.root));
+    app.use(serveStatic(config.server.root));
 
     server = http.createServer(app);
     server.listen(config.server.port);
