@@ -10,31 +10,32 @@
 */
 
 var gulp = require('gulp');
+var sequence = require('run-sequence');
+var config = require("./gulp/config");
 
 //Require the project gulp directory
 require('./gulp');
 
 //Build and start watching for changes
-gulp.task('default', ['build', 'watch', 'watchify', 'test-watch', 'serve']);
+gulp.task('default', function(done) {
+    sequence('build', 'watch', 'watchify', 'karma-watch', 'serve', done);
+});
 
 //All build tasks
 gulp.task('build', ['browserify', 'jade', 'less', 'bower', 'images', 'assets']);
 
-//Create a release build
-gulp.task('release', function() {
-    var config = require("./gulp/config");
-    config.isReleaseBuild = true;
+//Run tests
+gulp.task('test', function(done) {
+    sequence('karma', 'protractor', done)
+});
 
-    //Run build task
-    gulp.start('build');
+//Create a release build
+gulp.task('release', function(done) {
+    config.isReleaseBuild = true;
+    sequence('build', done);
 });
 
 //Create a release build, zip and upload it
-gulp.task('deploy', ['release', 'build'], function() {
-    gulp.start('deploy-upload');
-});
-
-//Before uploading to FTP run test and protractor.
-gulp.task('deploy-upload', ['test', 'protractor'], function() {
-    gulp.start('ftp');
+gulp.task('deploy', function(done) {
+    sequence('release', 'test', 'zip', 'ftp', done);
 });

@@ -9,7 +9,7 @@ gulp.task('browserify', function () {
     return compile(false);
 });
 
-gulp.task('watchify', ['build'], function () {
+gulp.task('watchify', function () {
     return compile(true);
 });
 

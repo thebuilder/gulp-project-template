@@ -2,7 +2,7 @@ var gulp = require('gulp');
 var path = require('path');
 var config = require('../config');
 
-gulp.task('test', ['testify', 'coverage'], function(done) {
+gulp.task('karma', ['testify', 'coverage'], function(done) {
     var karma = require('karma').server;
 
     var opts = {
@@ -25,7 +25,7 @@ gulp.task('test', ['testify', 'coverage'], function(done) {
     });
 });
 
-gulp.task('test-watch', ['testify-watch', 'coverage-watch'], function(done) {
+gulp.task('karma-watch', ['testify-watch', 'coverage-watch'], function(done) {
     var karma = require('karma').server;
 
     var opts = {

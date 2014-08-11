@@ -1,6 +1,5 @@
 var fs = require('fs');
-var onlyScripts = require('./util/scriptFilter');
-var tasks = fs.readdirSync('./gulp/tasks/').filter(onlyScripts);
+var tasks = fs.readdirSync('./gulp/tasks/');
 
 /**
  * Include all the tasks in the tasks directory
