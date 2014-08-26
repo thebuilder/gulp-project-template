@@ -30,15 +30,14 @@ function compileTestBundle(watch) {
 
     var opts = {debug:true, extensions: [".js"]};
     if (watch) {
-//        testBundler = watchify(browserify(getTestFiles(), extend(opts, watchify.args)));
-        testBundler = watchify(getTestFiles());
+        testBundler = watchify(browserify(getTestFiles(), extend(opts, watchify.args)));
     } else {
-        testBundler = browserify(getTestFiles());
+        testBundler = browserify(getTestFiles(), opts);
     }
 
     //Wrap the bundle method in a function, so it can be called by watchify
     function rebundle () {
-        return testBundler.bundle(opts)
+        return testBundler.bundle()
             .on('error', function (error) {
                 handleErrors(error); //Break the pipe by placing error handler outside
             })

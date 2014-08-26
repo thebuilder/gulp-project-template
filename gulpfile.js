@@ -18,7 +18,7 @@ require('./gulp');
 
 //Build and start watching for changes
 gulp.task('default', function(done) {
-    sequence('build', 'watch', 'watchify', 'karma-watch', 'serve', done);
+    sequence('build', 'watch', 'watchify', 'karma-watch', 'serve', 'open', done);
 });
 
 //All build tasks

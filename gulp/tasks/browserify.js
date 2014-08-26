@@ -21,7 +21,7 @@ gulp.task('watchify', function () {
 function compile(watch) {
     var watchify = require('watchify');
     var browserify = require('browserify');
-    var mold = require('mold-source-map');
+	var sourcemaps   = require('gulp-sourcemaps');
     var source = require('vinyl-source-stream');
     var extend = require("extend");
     var stripDebug = require('gulp-strip-debug');
@@ -30,10 +30,10 @@ function compile(watch) {
     var opts = {debug:!config.isReleaseBuild, extensions: [".js"]};
     var bundler;
     if (watch) {
-        //bundler = watchify(browserify(extend(opts, watchify.args)));
-        bundler = watchify();
+        bundler = watchify(browserify(extend(opts, watchify.args)));
+        //bundler = watchify();
     } else {
-        bundler = browserify();
+        bundler = browserify(opts);
     }
 
     //bundler.add(path.resolve(config.js.src));
@@ -55,13 +55,14 @@ function compile(watch) {
 
     //Wrap the bundle method in a function, so it can be called by watchify
     function rebundle() {
-        return bundler.bundle(opts)
+        return bundler.bundle()
             .on('error', function(error) {
                 handleErrors(error); //Break the pipe by placing error handler outside
             })
-            .pipe(!config.isReleaseBuild ? mold.transformSources(mapSources) : gutil.noop())
             .pipe(source(config.js.name))
+			//.pipe(streamify(sourcemaps.init({loadMaps: true})))
             .pipe(config.isReleaseBuild ? streamify(stripDebug()) : gutil.noop())
+			//.pipe(streamify(sourcemaps.write({sourceRoot: '../source/'})))
             .pipe(gulp.dest(config.dist + config.js.dir));
     }
 
@@ -70,21 +71,6 @@ function compile(watch) {
         bundler.on('update', rebundle);
     }
     return rebundle();
-}
-
-
-/**
- * Transform the paths in the sourcemap, so they become relative, and point to the virtual "source" directory.
- * @param file {string}
- * @return {string}
- */
-function mapSources(file) {
-    if (!file) return "";
-    if (file.indexOf("node_modules") > -1) {
-        return "../source/" + path.relative(path.resolve("."), file);
-    } else {
-        return "../source/" + config.js.dir + "/" + path.relative(path.resolve(config.src + config.js.dir), file);
-    }
 }
 
 /**

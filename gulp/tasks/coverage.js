@@ -14,6 +14,7 @@ gulp.task('coverage-watch', function () {
 function compile(watch) {
     var watchify = require('watchify');
     var browserify = require('browserify');
+    var extend = require('extend');
     var istanbul = require('browserify-istanbul');
     var source = require('vinyl-source-stream');
 
@@ -23,10 +24,10 @@ function compile(watch) {
     var opts = {debug:true, extensions: [".js"]};
     var bundler;
     if (watch) {
-        //bundler = watchify(browserify(extend(opts, watchify.args)));
-        bundler = watchify();
+        bundler = watchify(browserify(extend(opts, watchify.args)));
+        //bundler = watchify();
     } else {
-        bundler = browserify();
+        bundler = browserify(opts);
     }
 
     bundler.add("./" + config.js.src);
@@ -38,7 +39,7 @@ function compile(watch) {
 
     //Wrap the bundle method in a function, so it can be called by watchify
     function rebundle() {
-        return bundler.bundle(opts)
+        return bundler.bundle()
             .on('error', function(error) {
                 handleErrors(error); //Break the pipe by placing error handler outside
             })
