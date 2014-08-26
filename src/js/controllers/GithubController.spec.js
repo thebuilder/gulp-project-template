@@ -14,26 +14,28 @@ describe("Controllers", function() {
         var scope;
         var servicePromise;
 
-        //Create the app module
-        beforeEach(angular.mock.module(testGlobals.ngAppName));
+        beforeEach(function() {
+			//Create the app module
+			angular.mock.module(testGlobals.ngAppName);
 
-        /**
-         * Inject all the angular methods you need
-         */
-        beforeEach(inject(function ($injector) {
-            var $rootScope = $injector.get('$rootScope');
-            var $controller = $injector.get('$controller');
-            var $q = $injector.get('$q');
-            GithubService = $injector.get('GithubService');
-            scope = $rootScope.$new();
+			/**
+			 * Inject all the angular methods you need
+			 */
+			inject(function ($injector) {
+				var $rootScope = $injector.get('$rootScope');
+				var $controller = $injector.get('$controller');
+				var $q = $injector.get('$q');
+				GithubService = $injector.get('GithubService');
+				scope = $rootScope.$new();
 
-            //Create a promise for the service method.
-            servicePromise = $q.defer();
+				//Create a promise for the service method.
+				servicePromise = $q.defer();
 
-            //Use ControllerAs syntax when instantiating.
-            $controller('GithubController as ctrl', {$scope: scope, GithubService:GithubService});
-            ctrl = scope["ctrl"]; //Get the 'as' property from scope, and assign it a var for easy access.
-        }));
+				//Use ControllerAs syntax when instantiating.
+				$controller('GithubController as ctrl', {$scope: scope, GithubService:GithubService});
+				ctrl = scope["ctrl"]; //Get the 'as' property from scope, and assign it a var for easy access.
+			});
+		});
 
         /**
          * Resolve the service promise.

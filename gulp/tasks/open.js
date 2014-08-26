@@ -3,7 +3,6 @@ var gulp = require('gulp');
 
 gulp.task('open', function() {
     var open    = require("gulp-open");
-	var opener = require("opener");
     var config  = require('../config');
 
 	var options = {
