@@ -41,18 +41,17 @@ gulp.task('ftp', function () {
     } else {
         //Read data
         var ftpTargets = require('../.ftp.json');
-        var argv = require('minimist')(process.argv.slice(2));
 
         if (!ftpTargets) {
-            gutil.log(gutil.colors.red("Error:"), "No '.ftp.json' file found. Make sure it is created.");
+            gutil.log(gutil.colors.red("Error:"), "No " + gutil.colors.magenta('.ftp.json') + " file found. Make sure it is created.");
             return null;
         }
         if (!ftpTargets.length) {
-            gutil.log(gutil.colors.red("Error:"), "'.ftp.json' file is empty. Make sure it contains at least one deploy target.");
+            gutil.log(gutil.colors.red("Error:"),  gutil.colors.magenta('.ftp.json') + " file is empty. Make sure it contains at least one deploy target.");
             return null;
         }
 
-        var target = argv.target;
+        var target = process.env.TARGET_ENV;
         if (ftpTargets.length == 1 || !target) {
             //If only one target exists in the .json file use it.
             if (ftpTargets[0].hasOwnProperty("ftp")) options = ftpTargets[0].ftp;
@@ -79,7 +78,7 @@ gulp.task('ftp', function () {
         if (process.env.FTP_HOST) {
             gutil.log(gutil.colors.red("Error:"), "Failed to read FTP details from ENV.");
         } else {
-            gutil.log(gutil.colors.red("Error:"), "Failed to read FTP details from '.ftp.json' file. " + (target ? " Target not found: " + target : ""));
+            gutil.log(gutil.colors.red("Error:"), "Failed to read FTP details from " + gutil.colors.magenta('.ftp.json') + " file." + (target ? " Target not found: " + gutil.colors.cyan(target) : ""));
         }
         return null;
     }

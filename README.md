@@ -132,6 +132,40 @@ describe("A suite", function() {
 ##Protractor
 Protractor is an E2E testing framework built for AngularJS.
 
+####Debugging with Element Explorer
+You can start an interactive version of the element explorer, so you can test out the various Protractor commands. This will allow you to quickly see the result of various locators and commands.
+
+Get a selenium server running at **localhost:4444**:
+
+	node node_modules/gulp-protractor/node_modules/.bin/webdriver-manager update
+	node node_modules/gulp-protractor/node_modules/.bin/webdriver-manager start
+
+Start element explorer on the Node server **localhost:3000** (make sure it is running, by executing `gulp serve`):
+
+	node node_modules/gulp-protractor/node_modules/protractor/bin/elementexplorer.js localhost:3000
+
+This will load up the URL on WebDriver and put the terminal into a REPL loop.
+You will see a > prompt. The `browser`, `element` and `protractor` variables will be available. Enter a command such as:
+
+    > element(by.id('foobar')).getText()
+
+or
+
+    > browser.get('http://localhost:3000/subpage.html')
+
+To get a list of functions you can call, try:
+
+    > browser
+
+Typing <tab> at a blank prompt will fill in a suggestion for finding
+elements.
+
+Use the `list` helper function to find elements by strategy:
+  e.g., `list(by.binding(''))` gets all bindings.
+  
+See the complete [Protractor API](http://angular.github.io/protractor/#/api)
+
+
 ##Continues Integration
 If setting up a CI server, like [codeship.io](http://codeship.io), use the following commands in a Node 0.10.x env:
 
@@ -144,5 +178,4 @@ bower install -f --silent
 
 # Test commands
 gulp release test
-gulp protractor
 ```

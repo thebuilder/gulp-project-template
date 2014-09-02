@@ -4,7 +4,7 @@ module.exports = {
     server: {
         root: path.resolve('./dist/'),
         indexFile: 'index.html',
-        port: '8080',
+        port: '3000',
         log: true,
 
         browser: 'google chrome canary'
@@ -56,5 +56,23 @@ module.exports = {
     },
 
     //Runtime vars. These are used by tasks.
-    isReleaseBuild: false
+    isReleaseBuild: false,
+
+	configureEnv: configureEnv
 };
+
+function configureEnv() {
+	var argv = require('minimist')(process.argv.slice(2));
+
+	//Configure NODE_ENV
+	if (argv['release']) {
+		process.env.NODE_ENV = 'production';
+		module.exports.isReleaseBuild = true;
+	} else if (!process.env.NODE_ENV) {
+		//Default to 'development' NODE_ENV
+		process.env.NODE_ENV = 'development';
+	}
+
+	//Target ENV set by --target dev
+	process.env.TARGET_ENV = argv["target"] || argv["t"] || process.env.TARGET_ENV || 'local';
+}

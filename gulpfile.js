@@ -12,6 +12,7 @@
 var gulp = require('gulp');
 var sequence = require('run-sequence');
 var config = require("./gulp/config");
+config.configureEnv();
 
 //Require the project gulp directory
 require('./gulp');
